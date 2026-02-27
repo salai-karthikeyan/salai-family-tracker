@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salai Family Tracker 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink-50: #fff0f6;
+    --pink-100: #ffe0ee;
+    --pink-200: #ffb3d1;
+    --pink-300: #ff85b3;
+    --pink-400: #ff4d8d;
+    --pink-500: #e91e8c;
+    --pink-600: #c2185b;
+    --peach: #ffede0;
+    --peach-dark: #ffcba4;
+    --rose: #fff5f5;
+    --text-dark: #3d1a2e;
+    --text-mid: #7a3a5a;
+    --text-light: #b06090;
+    --white: #ffffff;
+    --shadow: 0 4px 24px rgba(233,30,140,0.10);
+    --shadow-lg: 0 8px 40px rgba(233,30,140,0.18);
+    --radius: 20px;
+    --radius-lg: 32px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--pink-50);
+    color: var(--text-dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ---- BACKGROUNDS ---- */
+  .bg-blobs {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    overflow: hidden;
+  }
+  .bg-blobs span {
+    position: absolute; border-radius: 50%;
+    filter: blur(60px); opacity: 0.18;
+  }
+  .bg-blobs span:nth-child(1) { width: 500px; height: 500px; background: #ff85b3; top: -100px; left: -100px; }
+  .bg-blobs span:nth-child(2) { width: 350px; height: 350px; background: #ffb3d1; bottom: 0; right: -80px; }
+  .bg-blobs span:nth-child(3) { width: 200px; height: 200px; background: #ffd6e8; top: 40%; left: 50%; }
+
+  .screen { position: relative; z-index: 1; min-height: 100vh; }
+
+  /* ---- HIDDEN ---- */
+  .hidden { display: none !important; }
+
+  /* ---- HOME SCREEN ---- */
+  #home {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 40px 20px 60px;
+  }
+  .home-header { text-align: center; margin-bottom: 36px; }
+  .home-header .logo-icon { font-size: 40px; margin-bottom: 8px; }
+  .home-header h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    color: var(--pink-500);
+    line-height: 1.1;
+    text-shadow: 0 2px 12px rgba(233,30,140,0.15);
+  }
+  .home-header p {
+    font-size: 0.95rem; color: var(--text-light); margin-top: 6px;
+    font-weight: 600;
+  }
+  .date-badge {
+    background: var(--white); border: 2px solid var(--pink-200);
+    border-radius: 50px; padding: 8px 20px;
+    font-size: 0.9rem; font-weight: 700; color: var(--text-mid);
+    margin-bottom: 40px; box-shadow: var(--shadow);
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .profiles-grid {
+    display: flex; flex-wrap: wrap; gap: 24px; justify-content: center;
+    width: 100%; max-width: 900px;
+  }
+
+  .profile-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 32px 24px 28px;
+    text-align: center;
+    cursor: pointer;
+    width: 240px;
+    box-shadow: var(--shadow);
+    border: 2px solid var(--pink-100);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .profile-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 6px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+  .profile-card.dad::before { background: linear-gradient(90deg, #ff4d8d, #ff85b3); }
+  .profile-card.mom::before { background: linear-gradient(90deg, #e91e8c, #ff4d8d); }
+  .profile-card.daughter::before { background: linear-gradient(90deg, #ffb3d1, #ff85b3); }
+
+  .profile-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--pink-300);
+  }
+  .profile-card:active { transform: scale(0.98); }
+
+  .profile-avatar {
+    width: 100px; height: 100px; border-radius: 50%;
+    object-fit: cover; object-position: top;
+    border: 4px solid var(--pink-200);
+    margin-bottom: 14px;
+    box-shadow: 0 4px 16px rgba(233,30,140,0.2);
+  }
+  .profile-name {
+    font-size: 1.3rem; font-weight: 900; color: var(--text-dark);
+    margin-bottom: 4px;
+  }
+  .profile-role {
+    font-size: 0.8rem; font-weight: 700; color: var(--text-light);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 14px;
+  }
+  .profile-status {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.82rem; font-weight: 700;
+    background: var(--pink-50); color: var(--pink-500);
+    border: 1.5px solid var(--pink-200);
+    border-radius: 50px; padding: 4px 12px;
+  }
+  .profile-status.done {
+    background: #f0fff4; color: #16a34a; border-color: #86efac;
+  }
+  .checkin-btn {
+    margin-top: 16px;
+    background: linear-gradient(135deg, var(--pink-400), var(--pink-500));
+    color: white; border: none; border-radius: 50px;
+    padding: 10px 28px; font-size: 0.9rem; font-weight: 800;
+    cursor: pointer; font-family: 'Nunito', sans-serif;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 12px rgba(233,30,140,0.3);
+    width: 100%;
+  }
+  .checkin-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(233,30,140,0.4); }
+
+  /* ---- QUICK STATS on HOME ---- */
+  .home-stats {
+    margin-top: 48px; width: 100%; max-width: 900px;
+  }
+  .home-stats h2 {
+    font-size: 1.1rem; font-weight: 800; color: var(--text-mid);
+    margin-bottom: 16px; text-align: center;
+  }
+  .stats-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .stat-chip {
+    background: var(--white); border: 2px solid var(--pink-100);
+    border-radius: var(--radius); padding: 14px 20px;
+    text-align: center; box-shadow: var(--shadow);
+    min-width: 120px; flex: 1;
+  }
+  .stat-chip .num { font-size: 1.8rem; font-weight: 900; color: var(--pink-500); }
+  .stat-chip .lbl { font-size: 0.75rem; color: var(--text-light); font-weight: 700; }
+
+  /* ---- FORM SCREEN ---- */
+  #form-screen {
+    padding: 0 0 80px;
+    max-width: 700px; margin: 0 auto;
+    display: flex; flex-direction: column;
+  }
+
+  .form-header {
+    background: linear-gradient(135deg, var(--pink-400), var(--pink-600));
+    color: white; padding: 28px 24px 36px;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    position: relative; overflow: hidden;
+  }
+  .form-header::after {
+    content: '🌸';
+    position: absolute; right: 20px; bottom: -10px;
+    font-size: 80px; opacity: 0.15;
+  }
+  .back-btn {
+    background: rgba(255,255,255,0.2); border: 1.5px solid rgba(255,255,255,0.4);
+    color: white; border-radius: 50px; padding: 6px 16px;
+    font-size: 0.82rem; font-weight: 700; cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    margin-bottom: 16px; display: inline-flex; align-items: center; gap: 5px;
+  }
+  .form-header-profile { display: flex; align-items: center; gap: 16px; }
+  .form-avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    object-fit: cover; object-position: top;
+    border: 3px solid rgba(255,255,255,0.6);
+  }
+  .form-header h2 { font-size: 1.5rem; font-weight: 900; }
+  .form-header p { font-size: 0.85rem; opacity: 0.85; margin-top: 2px; }
+
+  .progress-bar-wrap {
+    margin: 20px 24px 0;
+  }
+  .progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 0.8rem; font-weight: 700; color: var(--text-light);
+    margin-bottom: 6px;
+  }
+  .progress-bar {
+    height: 8px; background: var(--pink-100); border-radius: 10px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--pink-400), var(--pink-500));
+    border-radius: 10px; transition: width 0.4s ease;
+  }
+
+  .questions-container { padding: 0 20px; }
+
+  .question-card {
+    background: var(--white); border-radius: var(--radius);
+    padding: 22px; margin-top: 16px;
+    border: 2px solid var(--pink-100);
+    box-shadow: var(--shadow);
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-number {
+    font-size: 0.75rem; font-weight: 800; color: var(--pink-400);
+    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px;
+  }
+  .q-text {
+    font-size: 1rem; font-weight: 700; color: var(--text-dark);
+    margin-bottom: 14px; line-height: 1.4;
+  }
+
+  /* Yes/No toggle */
+  .yn-group { display: flex; gap: 10px; }
+  .yn-btn {
+    flex: 1; padding: 12px; border-radius: 14px;
+    border: 2px solid var(--pink-200); background: var(--pink-50);
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem;
+    cursor: pointer; transition: all 0.15s; color: var(--text-mid);
+  }
+  .yn-btn:hover { border-color: var(--pink-400); background: var(--pink-100); }
+  .yn-btn.selected-yes { background: #f0fff4; border-color: #16a34a; color: #16a34a; }
+  .yn-btn.selected-no { background: #fff0f0; border-color: #ef4444; color: #ef4444; }
+
+  /* Scale 1-5 */
+  .scale-group { display: flex; gap: 8px; justify-content: space-between; }
+  .scale-btn {
+    flex: 1; padding: 12px 6px; border-radius: 12px;
+    border: 2px solid var(--pink-200); background: var(--pink-50);
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem;
+    cursor: pointer; transition: all 0.15s; color: var(--text-mid);
+    text-align: center;
+  }
+  .scale-btn.selected { background: var(--pink-400); border-color: var(--pink-500); color: white; }
+  .scale-labels { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-light); margin-top: 4px; font-weight: 600; }
+
+  /* Text input */
+  .q-textarea {
+    width: 100%; padding: 12px 14px; border: 2px solid var(--pink-200);
+    border-radius: 14px; font-family: 'Nunito', sans-serif; font-size: 0.95rem;
+    color: var(--text-dark); resize: vertical; min-height: 80px;
+    outline: none; transition: border-color 0.2s;
+    background: var(--pink-50);
+  }
+  .q-textarea:focus { border-color: var(--pink-400); background: white; }
+
+  /* Number input */
+  .q-number-input {
+    width: 100%; padding: 12px 14px; border: 2px solid var(--pink-200);
+    border-radius: 14px; font-family: 'Nunito', sans-serif; font-size: 1rem;
+    color: var(--text-dark); outline: none; transition: border-color 0.2s;
+    background: var(--pink-50);
+  }
+  .q-number-input:focus { border-color: var(--pink-400); background: white; }
+
+  /* Child emoji picker */
+  .emoji-choice-group { display: flex; flex-wrap: wrap; gap: 10px; }
+  .emoji-choice-btn {
+    padding: 10px 16px; border-radius: 14px;
+    border: 2px solid var(--pink-200); background: var(--pink-50);
+    font-size: 1.5rem; cursor: pointer; transition: all 0.15s;
+  }
+  .emoji-choice-btn.selected { border-color: var(--pink-400); background: var(--pink-100); transform: scale(1.15); }
+
+  .submit-btn {
+    margin: 28px 20px 0;
+    background: linear-gradient(135deg, var(--pink-400), var(--pink-600));
+    color: white; border: none; border-radius: 50px;
+    padding: 16px; font-size: 1.1rem; font-weight: 900;
+    cursor: pointer; font-family: 'Nunito', sans-serif;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 6px 20px rgba(233,30,140,0.35);
+    width: calc(100% - 40px);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(233,30,140,0.45); }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* ---- GROCERY SECTION ---- */
+  .grocery-section {
+    background: var(--white); border-radius: var(--radius);
+    padding: 22px; margin-top: 16px;
+    border: 2px solid var(--peach-dark);
+    box-shadow: var(--shadow);
+  }
+  .grocery-section h3 { font-size: 1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; }
+  .grocery-section p { font-size: 0.82rem; color: var(--text-light); font-weight: 600; margin-bottom: 14px; }
+  .grocery-item-row {
+    display: flex; gap: 8px; align-items: center; margin-bottom: 10px;
+    background: var(--pink-50); border-radius: 12px; padding: 10px 12px;
+    border: 1.5px solid var(--pink-100);
+  }
+  .grocery-item-name { flex: 2; font-weight: 700; color: var(--text-dark); font-size: 0.9rem; }
+  .grocery-status-btn {
+    padding: 5px 10px; border-radius: 8px; border: 1.5px solid var(--pink-200);
+    background: var(--pink-50); font-family: 'Nunito', sans-serif;
+    font-size: 0.78rem; font-weight: 700; cursor: pointer; color: var(--text-mid);
+    transition: all 0.15s;
+  }
+  .grocery-status-btn.using { background: #e8fff2; border-color: #22c55e; color: #16a34a; }
+  .grocery-status-btn.finished { background: #fff0f0; border-color: #ef4444; color: #dc2626; }
+  .add-grocery-row { display: flex; gap: 8px; margin-top: 10px; }
+  .add-grocery-input {
+    flex: 2; padding: 9px 12px; border: 1.5px solid var(--pink-200);
+    border-radius: 10px; font-family: 'Nunito', sans-serif; font-size: 0.88rem;
+    outline: none; background: var(--pink-50);
+  }
+  .add-grocery-input:focus { border-color: var(--pink-400); }
+  .add-grocery-btn {
+    padding: 9px 16px; background: var(--pink-400); color: white;
+    border: none; border-radius: 10px; font-weight: 800; cursor: pointer;
+    font-family: 'Nunito', sans-serif; font-size: 0.88rem;
+  }
+  .grocery-rate-input {
+    flex: 1; padding: 9px 12px; border: 1.5px solid var(--pink-200);
+    border-radius: 10px; font-family: 'Nunito', sans-serif; font-size: 0.88rem;
+    outline: none; background: var(--pink-50); width: 80px;
+  }
+
+  /* ---- SUCCESS SCREEN ---- */
+  #success-screen {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 40px 20px; text-align: center;
+  }
+  .success-icon { font-size: 80px; margin-bottom: 20px; animation: bounce 0.6s ease; }
+  @keyframes bounce {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+  .success-screen h2 {
+    font-family: 'Pacifico', cursive; color: var(--pink-500);
+    font-size: 2rem; margin-bottom: 10px;
+  }
+  .success-screen p { color: var(--text-light); font-size: 1rem; font-weight: 600; margin-bottom: 28px; }
+  .success-home-btn {
+    background: linear-gradient(135deg, var(--pink-400), var(--pink-600));
+    color: white; border: none; border-radius: 50px;
+    padding: 14px 40px; font-size: 1rem; font-weight: 800;
+    cursor: pointer; font-family: 'Nunito', sans-serif;
+    box-shadow: 0 6px 20px rgba(233,30,140,0.3);
+  }
+
+  /* ---- INSIGHTS SCREEN ---- */
+  #insights-screen { padding: 0 0 80px; max-width: 700px; margin: 0 auto; }
+  .insights-header {
+    background: linear-gradient(135deg, #ff4d8d, #c2185b);
+    color: white; padding: 28px 24px 36px;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    position: relative; overflow: hidden;
+  }
+  .insights-header::after { content: '📊'; position: absolute; right: 20px; bottom: -10px; font-size: 80px; opacity: 0.15; }
+  .insights-content { padding: 0 20px; }
+  .insight-card {
+    background: var(--white); border-radius: var(--radius);
+    padding: 20px; margin-top: 16px;
+    border: 2px solid var(--pink-100); box-shadow: var(--shadow);
+  }
+  .insight-card h3 { font-size: 1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 12px; }
+  .mini-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .mini-bar-label { width: 100px; font-size: 0.82rem; font-weight: 700; color: var(--text-mid); }
+  .mini-bar-bg { flex: 1; height: 10px; background: var(--pink-100); border-radius: 10px; overflow: hidden; }
+  .mini-bar-fill { height: 100%; background: linear-gradient(90deg, var(--pink-300), var(--pink-500)); border-radius: 10px; transition: width 0.6s ease; }
+  .mini-bar-pct { font-size: 0.8rem; font-weight: 800; color: var(--pink-500); width: 36px; text-align: right; }
+
+  /* ---- SETUP SCREEN ---- */
+  #setup-screen {
+    padding: 40px 20px; max-width: 600px; margin: 0 auto;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  #setup-screen h2 { font-family: 'Pacifico', cursive; color: var(--pink-500); font-size: 1.6rem; margin-bottom: 8px; }
+  #setup-screen p { color: var(--text-light); font-weight: 600; font-size: 0.9rem; margin-bottom: 28px; text-align: center; }
+  .setup-card {
+    background: var(--white); border-radius: var(--radius);
+    padding: 24px; width: 100%; border: 2px solid var(--pink-100);
+    box-shadow: var(--shadow); margin-bottom: 16px;
+  }
+  .setup-card h3 { font-size: 1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 12px; }
+  .setup-input {
+    width: 100%; padding: 10px 14px; border: 2px solid var(--pink-200);
+    border-radius: 12px; font-family: 'Nunito', sans-serif; font-size: 0.95rem;
+    outline: none; background: var(--pink-50); margin-bottom: 8px;
+  }
+  .setup-input:focus { border-color: var(--pink-400); }
+  .code-block {
+    background: #1a1a2e; color: #e8c5f5; padding: 14px 16px;
+    border-radius: 12px; font-size: 0.78rem; line-height: 1.6;
+    white-space: pre-wrap; word-break: break-all; margin: 10px 0;
+    font-family: 'Courier New', monospace;
+  }
+  .copy-btn {
+    background: var(--pink-100); color: var(--pink-600); border: 1.5px solid var(--pink-200);
+    border-radius: 8px; padding: 6px 14px; font-size: 0.8rem; font-weight: 800;
+    cursor: pointer; font-family: 'Nunito', sans-serif; margin-top: 4px;
+  }
+  .setup-done-btn {
+    background: linear-gradient(135deg, var(--pink-400), var(--pink-600));
+    color: white; border: none; border-radius: 50px;
+    padding: 14px 40px; font-size: 1rem; font-weight: 900;
+    cursor: pointer; font-family: 'Nunito', sans-serif;
+    margin-top: 8px; box-shadow: 0 6px 20px rgba(233,30,140,0.3);
+    width: 100%;
+  }
+
+  /* ---- NAV BAR ---- */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--white); border-top: 2px solid var(--pink-100);
+    display: flex; z-index: 100; box-shadow: 0 -4px 20px rgba(233,30,140,0.1);
+  }
+  .nav-btn {
+    flex: 1; padding: 12px 8px 14px; display: flex; flex-direction: column;
+    align-items: center; gap: 3px; cursor: pointer;
+    border: none; background: none; font-family: 'Nunito', sans-serif;
+    font-size: 0.68rem; font-weight: 700; color: var(--text-light);
+    transition: color 0.15s;
+  }
+  .nav-btn .nav-icon { font-size: 1.3rem; }
+  .nav-btn.active { color: var(--pink-500); }
+
+  /* ---- CONFIG SCREEN ---- */
+  #config-screen { padding: 20px; max-width: 700px; margin: 0 auto 80px; }
+  .config-section { background: var(--white); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; border: 2px solid var(--pink-100); box-shadow: var(--shadow); }
+  .config-section h3 { font-size: 1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 12px; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--text-dark); color: white; padding: 10px 24px;
+    border-radius: 50px; font-size: 0.88rem; font-weight: 700;
+    z-index: 9999; opacity: 0; transition: opacity 0.3s;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .profiles-grid { flex-direction: column; align-items: center; }
+    .profile-card { width: 100%; max-width: 320px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-blobs">
+  <span></span><span></span><span></span>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<!-- ============ HOME SCREEN ============ -->
+<div id="home" class="screen">
+  <div class="home-header">
+    <div class="logo-icon">🌸</div>
+    <h1>Salai Family Tracker</h1>
+    <p>Growing together, one day at a time</p>
+  </div>
+  <div class="date-badge">📅 <span id="home-date"></span></div>
+
+  <div class="profiles-grid">
+    <!-- DAD -->
+    <div class="profile-card dad" onclick="openProfile('dad')">
+      <img class="profile-avatar" id="dad-avatar" src="" alt="Karthik">
+      <div class="profile-name">Karthik</div>
+      <div class="profile-role">Dad 👨‍👩‍👧</div>
+      <div class="profile-status" id="dad-status">⭕ Not checked in</div>
+      <button class="checkin-btn">Check In Today</button>
+    </div>
+
+    <!-- MOM -->
+    <div class="profile-card mom" onclick="openProfile('mom')">
+      <img class="profile-avatar" id="mom-avatar" src="" alt="Raveena">
+      <div class="profile-name">Raveena</div>
+      <div class="profile-role">Mom 🌺</div>
+      <div class="profile-status" id="mom-status">⭕ Not checked in</div>
+      <button class="checkin-btn">Check In Today</button>
+    </div>
+
+    <!-- DAUGHTER -->
+    <div class="profile-card daughter" onclick="openProfile('daughter')">
+      <img class="profile-avatar" id="daughter-avatar" src="" alt="Salai">
+      <div class="profile-name">Salai</div>
+      <div class="profile-role">Our Star ⭐</div>
+      <div class="profile-status" id="daughter-status">⭕ Not checked in</div>
+      <button class="checkin-btn">Check In Today</button>
+    </div>
+  </div>
+
+  <!-- QUICK STATS -->
+  <div class="home-stats">
+    <h2>📈 This Week's Family Score</h2>
+    <div class="stats-row">
+      <div class="stat-chip"><div class="num" id="stat-streak">0</div><div class="lbl">Day Streak 🔥</div></div>
+      <div class="stat-chip"><div class="num" id="stat-checkins">0</div><div class="lbl">Check-ins 📋</div></div>
+      <div class="stat-chip"><div class="num" id="stat-score">-</div><div class="lbl">Family Score 💯</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FORM SCREEN ============ -->
+<div id="form-screen" class="screen hidden">
+  <div class="form-header">
+    <button class="back-btn" onclick="goHome()">← Back</button>
+    <div class="form-header-profile">
+      <img class="form-avatar" id="form-avatar" src="" alt="">
+      <div>
+        <h2 id="form-name"></h2>
+        <p id="form-date-label"></p>
+      </div>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-label">
+      <span id="progress-label-text">Question 1</span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  </div>
+  <div class="questions-container" id="questions-container"></div>
+  <button class="submit-btn" id="submit-btn" onclick="submitForm()">
+    ✨ Submit My Check-in
+  </button>
+</div>
+
+<!-- ============ SUCCESS SCREEN ============ -->
+<div id="success-screen" class="screen hidden">
+  <div class="success-icon">🎉</div>
+  <h2>Well Done!</h2>
+  <p id="success-msg">Your check-in has been saved!</p>
+  <button class="success-home-btn" onclick="goHome()">🏠 Back to Home</button>
+</div>
+
+<!-- ============ INSIGHTS SCREEN ============ -->
+<div id="insights-screen" class="screen hidden">
+  <div class="insights-header">
+    <button class="back-btn" onclick="showScreen('home')">← Back</button>
+    <h2 style="font-size:1.5rem;font-weight:900;">Family Insights 📊</h2>
+    <p style="opacity:0.85;font-size:0.85rem;margin-top:4px;">Last 7 days analysis</p>
+  </div>
+  <div class="insights-content" id="insights-content"></div>
+  <div style="padding:0 20px;margin-top:16px;">
+    <button class="submit-btn" onclick="sendInsightsEmail()">📧 Send Report to Email</button>
+  </div>
+</div>
+
+<!-- ============ SETUP / CONFIG SCREEN ============ -->
+<div id="config-screen" class="screen hidden">
+  <h2 style="font-family:'Pacifico',cursive;color:var(--pink-500);font-size:1.4rem;text-align:center;margin-bottom:4px;padding-top:20px;">⚙️ Setup & Config</h2>
+  <p style="color:var(--text-light);font-size:0.85rem;text-align:center;margin-bottom:20px;font-weight:600;">Google Sheets Integration & App Settings</p>
+
+  <div class="config-section">
+    <h3>📋 Step 1: Google Apps Script Setup</h3>
+    <p style="font-size:0.85rem;color:var(--text-light);font-weight:600;margin-bottom:10px;">
+      1. Go to <strong>script.google.com</strong> → New Project<br>
+      2. Paste the code below → Save → Deploy as Web App<br>
+      3. Set "Who has access" to <strong>Anyone</strong><br>
+      4. Copy the Web App URL and paste it below
+    </p>
+    <div class="code-block" id="gas-code-block">Loading script...</div>
+    <button class="copy-btn" onclick="copyGASCode()">📋 Copy Script</button>
+  </div>
+
+  <div class="config-section">
+    <h3>🔗 Step 2: Paste Your Web App URL</h3>
+    <input type="url" class="setup-input" id="gas-url-input" placeholder="https://script.google.com/macros/s/..." />
+    <input type="email" class="setup-input" id="email-input" placeholder="Your email: salaikarthikeyanganesan@gmail.com" value="salaikarthikeyanganesan@gmail.com" />
+    <button class="setup-done-btn" onclick="saveConfig()">💾 Save Configuration</button>
+  </div>
+
+  <div class="config-section">
+    <h3>📸 Profile Images</h3>
+    <p style="font-size:0.82rem;color:var(--text-light);font-weight:600;margin-bottom:10px;">The images uploaded are already set. You can update them here:</p>
+    <label style="font-size:0.85rem;font-weight:700;color:var(--text-mid);">Dad (Karthik)</label>
+    <input type="file" accept="image/*" onchange="updateAvatar('dad', this)" style="margin-bottom:10px;display:block;font-size:0.82rem;">
+    <label style="font-size:0.85rem;font-weight:700;color:var(--text-mid);">Mom (Raveena)</label>
+    <input type="file" accept="image/*" onchange="updateAvatar('mom', this)" style="margin-bottom:10px;display:block;font-size:0.82rem;">
+    <label style="font-size:0.85rem;font-weight:700;color:var(--text-mid);">Daughter (Salai)</label>
+    <input type="file" accept="image/*" onchange="updateAvatar('daughter', this)" style="display:block;font-size:0.82rem;">
+  </div>
+</div>
+
+<!-- ============ BOTTOM NAV ============ -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" id="nav-home" onclick="showScreen('home'); setActiveNav('nav-home')">
+    <span class="nav-icon">🏠</span>Home
+  </button>
+  <button class="nav-btn" id="nav-insights" onclick="showScreen('insights'); setActiveNav('nav-insights')">
+    <span class="nav-icon">📊</span>Insights
+  </button>
+  <button class="nav-btn" id="nav-config" onclick="showScreen('config'); setActiveNav('nav-config')">
+    <span class="nav-icon">⚙️</span>Setup
+  </button>
+</nav>
+
+<script>
+// ============================================================
+//  DATA & STATE
+// ============================================================
+let state = {
+  gasUrl: '',
+  email: 'salaikarthikeyanganesan@gmail.com',
+  currentProfile: null,
+  responses: {},       // { dad: {date, answers}, mom: ..., daughter: ... }
+  groceryItems: [],    // [{name, rate, status, purchasedDate, finishedDates:[]}]
+  history: [],         // array of all submitted check-ins
+  streak: 0,
+};
+
+// ---- HARDCODED CONFIG (no setup needed) ----
+const GAS_URL_HARDCODED = 'https://script.google.com/macros/s/AKfycbwcI9h7ow-Erw4uUSwKXnwOy_gsAPg1gvzET4bVAH87EKShAqFY1sDPqujqmsYB-qVPHA/exec';
+const EMAIL_HARDCODED   = 'salaikarthikeyanganesan@gmail.com';
+
+// Load from localStorage
+function loadState() {
+  try {
+    const saved = localStorage.getItem('sft_state');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      Object.assign(state, parsed);
+    }
+    // Always use hardcoded values
+    state.gasUrl = GAS_URL_HARDCODED;
+    state.email  = EMAIL_HARDCODED;
+  } catch(e) {
+    state.gasUrl = GAS_URL_HARDCODED;
+    state.email  = EMAIL_HARDCODED;
+  }
+}
+
+function saveState() {
+  try { localStorage.setItem('sft_state', JSON.stringify(state)); } catch(e) {}
+}
+
+// Today's date
+function todayStr() {
+  return new Date().toISOString().split('T')[0];
+}
+
+function formatDate(d) {
+  return new Date(d + 'T00:00:00').toLocaleDateString('en-IN', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+}
+
+// ============================================================
+//  QUESTIONS
+// ============================================================
+const QUESTIONS = {
+  dad: [
+    { id: 'exercise', type: 'yn', text: '💪 Did you exercise today?' },
+    { id: 'exercise_min', type: 'number', text: '⏱️ How many minutes did you exercise?', condition: (a) => a.exercise === 'yes' },
+    { id: 'newspaper', type: 'yn', text: '📰 Did you read the newspaper this morning?' },
+    { id: 'book', type: 'yn', text: '📚 Did you read your book today?' },
+    { id: 'book_pages', type: 'number', text: '📖 How many pages did you read?', condition: (a) => a.book === 'yes' },
+    { id: 'moolamanthiram', type: 'yn', text: '🙏 Did you say Moolamanthiram today?' },
+    { id: 'side_hustle', type: 'yn', text: '🚀 Did you work on your side hustle today?' },
+    { id: 'side_hustle_mins', type: 'number', text: '⏱️ How many minutes on side hustle?', condition: (a) => a.side_hustle === 'yes' },
+    { id: 'screen_time', type: 'scale', text: '📱 How would you rate your mobile screen time today?', scaleLabels: ['Very Low', 'Very High'] },
+    { id: 'work_productive', type: 'scale', text: '💼 How productive was your work today?', scaleLabels: ['Not at all', 'Very much'] },
+    { id: 'argument', type: 'yn', text: '🤝 Did you have any arguments with Raveena today?' },
+    { id: 'argument_reason', type: 'text', text: '📝 Briefly, what was the reason?', condition: (a) => a.argument === 'yes' },
+    { id: 'time_with_salai', type: 'yn', text: '👧 Did you spend quality time with Salai today?' },
+    { id: 'football', type: 'yn', text: '⚽ Did you watch late-night football today?' },
+    { id: 'sleep_time', type: 'text', text: '😴 What time did you go to sleep last night? (e.g., 11:00 PM)' },
+    { id: 'mood', type: 'scale', text: '😊 How is your overall mood today?', scaleLabels: ['😞 Low', '😄 Great'] },
+    { id: 'energy', type: 'scale', text: '⚡ How was your energy level today?', scaleLabels: ['Drained', 'Energized'] },
+    { id: 'gratitude', type: 'text', text: '🌸 One thing you are grateful for today?' },
+    { id: 'anything_else', type: 'text', text: '💬 Anything else you want to add for the day?' },
+  ],
+  mom: [
+    { id: 'exercise', type: 'yn', text: '💪 Did you exercise today?' },
+    { id: 'exercise_min', type: 'number', text: '⏱️ How many minutes did you exercise?', condition: (a) => a.exercise === 'yes' },
+    { id: 'moolamanthiram', type: 'yn', text: '🙏 Did you say Moolamanthiram today?' },
+    { id: 'salai_story', type: 'yn', text: '📖 Did you read MagicPot stories to Salai today?' },
+    { id: 'salai_study', type: 'yn', text: '✏️ Did you do Salai\'s study session today?' },
+    { id: 'salai_play', type: 'yn', text: '🎮 Did you play with Salai today?' },
+    { id: 'kitchen_time', type: 'scale', text: '🍳 How much time was spent on kitchen work today?', scaleLabels: ['Very little', 'Too much'] },
+    { id: 'careless_mistake', type: 'yn', text: '⚠️ Did any careless mistake happen today?' },
+    { id: 'mistake_detail', type: 'text', text: '📝 What was the mistake? (so we can improve)', condition: (a) => a.careless_mistake === 'yes' },
+    { id: 'argument', type: 'yn', text: '🤝 Any argument with Karthik today?' },
+    { id: 'rest', type: 'yn', text: '😴 Did you take a rest/nap today?' },
+    { id: 'sleep_early', type: 'yn', text: '🌙 Did you sleep before 10:30 PM last night?' },
+    { id: 'me_time', type: 'yn', text: '🌺 Did you get any personal time for yourself today?' },
+    { id: 'mood', type: 'scale', text: '😊 How is your overall mood today?', scaleLabels: ['😞 Low', '😄 Great'] },
+    { id: 'energy', type: 'scale', text: '⚡ How was your energy level today?', scaleLabels: ['Drained', 'Energized'] },
+    { id: 'grocery_purchased', type: 'yn', text: '🛒 Did you purchase any grocery items today?' },
+    // grocery section handled separately
+    { id: 'gratitude', type: 'text', text: '🌸 One thing you are grateful for today?' },
+    { id: 'anything_else', type: 'text', text: '💬 Anything else you want to add for the day?' },
+  ],
+  daughter: [
+    { id: 'woke_early', type: 'emoji', text: '🌅 Did Salai wake up early today?', emojis: ['😄 Yes!', '😴 No...'] },
+    { id: 'school_ontime', type: 'emoji', text: '🏫 Did Salai go to school on time?', emojis: ['✅ Yes!', '⏰ Late...', '🏠 No school'] },
+    { id: 'water_school', type: 'emoji', text: '💧 Did Salai drink water at school?', emojis: ['👍 Yes!', '👎 Forgot'] },
+    { id: 'snacks_finished', type: 'emoji', text: '🍎 Did Salai finish her snacks at school?', emojis: ['😋 Yes!', '🙁 No'] },
+    { id: 'toilet', type: 'emoji', text: '🚽 Did Salai go to the toilet today?', emojis: ['✅ Yes!', '❌ Skipped'] },
+    { id: 'moolamanthiram', type: 'emoji', text: '🙏 Did Salai say Moolamanthiram today?', emojis: ['✅ Yes!', '❌ No'] },
+    { id: 'study', type: 'emoji', text: '✏️ Did Salai study today?', emojis: ['📚 Yes!', '🙈 No'] },
+    { id: 'magic_pot', type: 'emoji', text: '📖 Did Salai listen to MagicPot stories today?', emojis: ['😊 Yes!', '🙁 No'] },
+    { id: 'physical_play', type: 'emoji', text: '🏃 Did Salai have physical play/activity today?', emojis: ['⚽ Yes!', '📺 No'] },
+    { id: 'shouted', type: 'emoji', text: '🤫 Did Salai shout at mom or dad today?', emojis: ['😇 No!', '😬 Yes...'] },
+    { id: 'sleep_early', type: 'emoji', text: '🌙 Did Salai sleep on time?', emojis: ['😴 Yes!', '🌟 Stayed up'] },
+    { id: 'mood', type: 'emoji', text: '😊 How was Salai\'s mood today?', emojis: ['😄 Happy', '😐 Okay', '😢 Sad'] },
+    { id: 'anything_else', type: 'text', text: '💬 Anything special to note about Salai today?' },
+  ]
+};
+
+// ============================================================
+//  AVATARS - embed from uploaded files
+// ============================================================
+const AVATAR_KEYS = { dad: 'sft_avatar_dad', mom: 'sft_avatar_mom', daughter: 'sft_avatar_daughter' };
+// Default placeholder SVGs
+const DEFAULT_AVATARS = {
+  dad: `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23ffb3d1'/><text x='50' y='65' text-anchor='middle' font-size='45'>👨</text></svg>`,
+  mom: `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23ffcce0'/><text x='50' y='65' text-anchor='middle' font-size='45'>👩</text></svg>`,
+  daughter: `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23ffe0f0'/><text x='50' y='65' text-anchor='middle' font-size='45'>👧</text></svg>`
+};
+
+function getAvatar(profile) {
+  return localStorage.getItem(AVATAR_KEYS[profile]) || DEFAULT_AVATARS[profile];
+}
+
+function updateAvatar(profile, input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    localStorage.setItem(AVATAR_KEYS[profile], e.target.result);
+    document.getElementById(profile + '-avatar').src = e.target.result;
+    showToast('✅ Avatar updated!');
+  };
+  reader.readAsDataURL(file);
+}
+
+// ============================================================
+//  SCREEN MANAGEMENT
+// ============================================================
+function showScreen(name) {
+  ['home', 'form-screen', 'success-screen', 'insights-screen', 'config-screen'].forEach(id => {
+    document.getElementById(id).classList.add('hidden');
+  });
+  document.getElementById(name === 'insights' ? 'insights-screen' : name === 'config' ? 'config-screen' : name).classList.remove('hidden');
+  if (name === 'insights') renderInsights();
+}
+
+function setActiveNav(activeId) {
+  ['nav-home','nav-insights','nav-config'].forEach(id => {
+    document.getElementById(id).classList.toggle('active', id === activeId);
+  });
+}
+
+function goHome() {
+  showScreen('home');
+  setActiveNav('nav-home');
+  updateHomeUI();
+}
+
+// ============================================================
+//  HOME UI
+// ============================================================
+function updateHomeUI() {
+  document.getElementById('home-date').textContent = formatDate(todayStr());
+
+  ['dad','mom','daughter'].forEach(p => {
+    const avatar = document.getElementById(p + '-avatar');
+    avatar.src = getAvatar(p);
+
+    const todayEntry = state.responses[p];
+    const done = todayEntry && todayEntry.date === todayStr();
+    const statusEl = document.getElementById(p + '-status');
+    if (done) {
+      statusEl.textContent = '✅ Checked in!';
+      statusEl.className = 'profile-status done';
+    } else {
+      statusEl.textContent = '⭕ Not checked in';
+      statusEl.className = 'profile-status';
+    }
+  });
+
+  // Stats
+  const allHistory = state.history || [];
+  const last7 = allHistory.filter(h => {
+    const d = new Date(h.date);
+    const now = new Date();
+    return (now - d) < 7 * 24 * 3600 * 1000;
+  });
+  document.getElementById('stat-checkins').textContent = last7.length;
+
+  // Streak: consecutive days with at least 1 check-in
+  let streak = 0;
+  for (let i = 0; i < 30; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const ds = d.toISOString().split('T')[0];
+    const hasEntry = allHistory.some(h => h.date === ds);
+    if (hasEntry) streak++;
+    else if (i > 0) break;
+  }
+  document.getElementById('stat-streak').textContent = streak;
+
+  // Family score
+  if (last7.length > 0) {
+    const scores = last7.map(h => computeScore(h));
+    const avg = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+    document.getElementById('stat-score').textContent = avg + '%';
+  } else {
+    document.getElementById('stat-score').textContent = '-';
+  }
+}
+
+function computeScore(entry) {
+  // Simple scoring: count positive answers
+  const a = entry.answers || {};
+  let positive = 0, total = 0;
+  Object.entries(a).forEach(([k, v]) => {
+    if (v === 'yes' || (typeof v === 'string' && v.includes('Yes'))) { positive++; total++; }
+    else if (v === 'no' || (typeof v === 'string' && v.includes('No'))) { total++; }
+    else if (typeof v === 'number') { positive += v/5; total++; }
+  });
+  return total > 0 ? Math.round((positive/total)*100) : 50;
+}
+
+// ============================================================
+//  FORM
+// ============================================================
+let currentAnswers = {};
+let currentProfile = null;
+
+function openProfile(profile) {
+  currentProfile = profile;
+  currentAnswers = {};
+
+  document.getElementById('form-name').textContent = {dad:'Karthik 👨', mom:'Raveena 🌺', daughter:'Salai ⭐'}[profile];
+  document.getElementById('form-date-label').textContent = formatDate(todayStr());
+  document.getElementById('form-avatar').src = getAvatar(profile);
+
+  renderQuestions(profile);
+  showScreen('form-screen');
+}
+
+function getVisibleQuestions(profile) {
+  return QUESTIONS[profile].filter(q => {
+    if (!q.condition) return true;
+    return q.condition(currentAnswers);
+  });
+}
+
+function renderQuestions(profile) {
+  const qs = getVisibleQuestions(profile);
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+
+  qs.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'qcard_' + q.id;
+
+    let inputHTML = '';
+    if (q.type === 'yn') {
+      const yv = currentAnswers[q.id];
+      inputHTML = `<div class="yn-group">
+        <button class="yn-btn ${yv==='yes'?'selected-yes':''}" onclick="setAnswer('${q.id}','yes','yn'); rerenderQ('${profile}')">✅ Yes</button>
+        <button class="yn-btn ${yv==='no'?'selected-no':''}" onclick="setAnswer('${q.id}','no','yn'); rerenderQ('${profile}')">❌ No</button>
+      </div>`;
+    } else if (q.type === 'scale') {
+      inputHTML = `<div class="scale-group">
+        ${[1,2,3,4,5].map(n => `<button class="scale-btn ${currentAnswers[q.id]===n?'selected':''}" onclick="setAnswer('${q.id}',${n},'scale');rerenderQ('${profile}')">${n}</button>`).join('')}
+      </div>
+      <div class="scale-labels"><span>${q.scaleLabels?q.scaleLabels[0]:'Low'}</span><span>${q.scaleLabels?q.scaleLabels[1]:'High'}</span></div>`;
+    } else if (q.type === 'text') {
+      inputHTML = `<textarea class="q-textarea" placeholder="Type here..." onchange="setAnswer('${q.id}',this.value,'text')" oninput="setAnswer('${q.id}',this.value,'text')">${currentAnswers[q.id]||''}</textarea>`;
+    } else if (q.type === 'number') {
+      inputHTML = `<input type="number" class="q-number-input" placeholder="Enter number..." min="0" value="${currentAnswers[q.id]||''}" onchange="setAnswer('${q.id}',this.value,'number')" oninput="setAnswer('${q.id}',this.value,'number')">`;
+    } else if (q.type === 'emoji') {
+      inputHTML = `<div class="emoji-choice-group">
+        ${(q.emojis||[]).map((e,i) => `<button class="emoji-choice-btn ${currentAnswers[q.id]===e?'selected':''}" onclick="setAnswer('${q.id}','${e}','emoji');rerenderQ('${profile}')">${e}</button>`).join('')}
+      </div>`;
+    }
+
+    card.innerHTML = `
+      <div class="q-number">Question ${idx+1} of ${qs.length}</div>
+      <div class="q-text">${q.text}</div>
+      ${inputHTML}
+    `;
+    container.appendChild(card);
+  });
+
+  // Grocery section for mom
+  if (profile === 'mom') {
+    container.appendChild(buildGrocerySection());
+  }
+
+  updateProgress(profile);
+}
+
+function rerenderQ(profile) { renderQuestions(profile); }
+
+function setAnswer(qId, val, type) {
+  if (type === 'number') val = parseFloat(val) || 0;
+  currentAnswers[qId] = val;
+  updateProgress(currentProfile);
+}
+
+function updateProgress(profile) {
+  const qs = getVisibleQuestions(profile);
+  const answered = qs.filter(q => currentAnswers[q.id] !== undefined && currentAnswers[q.id] !== '').length;
+  const pct = Math.round((answered / qs.length) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('progress-label-text').textContent = `${answered} of ${qs.length} answered`;
+}
+
+// ============================================================
+//  GROCERY
+// ============================================================
+function buildGrocerySection() {
+  const div = document.createElement('div');
+  div.className = 'grocery-section';
+  div.id = 'grocery-section';
+
+  let itemsHTML = (state.groceryItems || []).map((item, i) => `
+    <div class="grocery-item-row">
+      <div class="grocery-item-name">🛒 ${item.name} ${item.rate ? '(₹'+item.rate+')' : ''}</div>
+      <button class="grocery-status-btn ${item.todayStatus==='using'?'using':''}" onclick="setGroceryStatus(${i},'using')">Still Using</button>
+      <button class="grocery-status-btn ${item.todayStatus==='finished'?'finished':''}" onclick="setGroceryStatus(${i},'finished')">Finished</button>
+    </div>
+  `).join('');
+
+  const showAdd = currentAnswers['grocery_purchased'] === 'yes';
+  div.innerHTML = `
+    <h3>🛒 Grocery Tracker</h3>
+    <p>Mark status for each item today, or add newly purchased items.</p>
+    ${itemsHTML}
+    ${showAdd ? `
+    <div class="add-grocery-row">
+      <input class="add-grocery-input" id="new-item-name" placeholder="Item name (e.g., Rice)" />
+      <input class="grocery-rate-input" id="new-item-rate" placeholder="₹ Rate" type="number" min="0"/>
+      <button class="add-grocery-btn" onclick="addGroceryItem()">+ Add</button>
+    </div>` : '<p style="font-size:0.8rem;color:var(--text-light);margin-top:8px;font-weight:600;">💡 Answer "Yes" to grocery purchase above to add new items.</p>'}
+  `;
+  return div;
+}
+
+function setGroceryStatus(i, status) {
+  state.groceryItems[i].todayStatus = status;
+  if (status === 'finished') {
+    state.groceryItems[i].finishedDates = state.groceryItems[i].finishedDates || [];
+    state.groceryItems[i].finishedDates.push(todayStr());
+  }
+  saveState();
+  renderQuestions('mom');
+}
+
+function addGroceryItem() {
+  const nameEl = document.getElementById('new-item-name');
+  const rateEl = document.getElementById('new-item-rate');
+  const name = nameEl ? nameEl.value.trim() : '';
+  const rate = rateEl ? rateEl.value : '';
+  if (!name) { showToast('⚠️ Please enter item name'); return; }
+  state.groceryItems = state.groceryItems || [];
+  state.groceryItems.push({
+    name, rate: rate || '',
+    purchasedDate: todayStr(),
+    todayStatus: 'using',
+    finishedDates: []
+  });
+  saveState();
+  renderQuestions('mom');
+  showToast('✅ Item added!');
+}
+
+// ============================================================
+//  SUBMIT
+// ============================================================
+async function submitForm() {
+  const profile = currentProfile;
+
+  // Save response
+  const entry = {
+    profile,
+    date: todayStr(),
+    answers: { ...currentAnswers },
+    grocerySnapshot: profile === 'mom' ? JSON.parse(JSON.stringify(state.groceryItems)) : null,
+    timestamp: new Date().toISOString()
+  };
+
+  state.responses[profile] = entry;
+  state.history = state.history || [];
+  state.history.push(entry);
+  saveState();
+
+  // Send to Google Apps Script
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Saving to Google Sheet...';
+
+  try {
+    await fetch(GAS_URL_HARDCODED, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(entry)
+    });
+    // no-cors returns opaque response — if no exception, data was sent
+  } catch(e) {
+    console.error('GAS fetch error:', e);
+    showToast('⚠️ Network error — data saved locally only');
+  }
+
+  btn.disabled = false;
+  btn.textContent = '✨ Submit My Check-in';
+
+  // Show success
+  const names = {dad:'Karthik', mom:'Raveena', daughter:'Salai'};
+  document.getElementById('success-msg').textContent = `${names[profile]}'s check-in for ${formatDate(todayStr())} has been saved! 🌸`;
+  showScreen('success-screen');
+
+  // Check if 7 days = send insights
+  checkWeeklyInsights();
+}
+
+// ============================================================
+//  INSIGHTS
+// ============================================================
+function renderInsights() {
+  const content = document.getElementById('insights-content');
+  const history = state.history || [];
+  const last7 = history.filter(h => {
+    const d = new Date(h.date);
+    return (new Date() - d) < 7 * 24 * 3600 * 1000;
+  });
+
+  if (last7.length === 0) {
+    content.innerHTML = `<div class="insight-card" style="text-align:center;padding:40px;">
+      <div style="font-size:48px;margin-bottom:12px;">📭</div>
+      <p style="color:var(--text-light);font-weight:700;">No check-ins yet this week.<br>Start checking in daily to see insights!</p>
+    </div>`;
+    return;
+  }
+
+  const profiles = ['dad','mom','daughter'];
+  const pNames = {dad:'Karthik (Dad)', mom:'Raveena (Mom)', daughter:'Salai (Daughter)'};
+  let html = '';
+
+  profiles.forEach(p => {
+    const pHistory = last7.filter(h => h.profile === p);
+    if (pHistory.length === 0) return;
+
+    const score = Math.round(pHistory.map(h=>computeScore(h)).reduce((a,b)=>a+b,0)/pHistory.length);
+
+    // Specific metrics
+    const metrics = [];
+    if (p === 'dad') {
+      metrics.push({ label: 'Exercise', val: pct(pHistory, 'exercise', 'yes') });
+      metrics.push({ label: 'Book Reading', val: pct(pHistory, 'book', 'yes') });
+      metrics.push({ label: 'Moolamanthiram', val: pct(pHistory, 'moolamanthiram', 'yes') });
+      metrics.push({ label: 'Side Hustle', val: pct(pHistory, 'side_hustle', 'yes') });
+      metrics.push({ label: 'No Arguments', val: pct(pHistory, 'argument', 'no') });
+    } else if (p === 'mom') {
+      metrics.push({ label: 'Exercise', val: pct(pHistory, 'exercise', 'yes') });
+      metrics.push({ label: 'Moolamanthiram', val: pct(pHistory, 'moolamanthiram', 'yes') });
+      metrics.push({ label: 'MagicPot Stories', val: pct(pHistory, 'salai_story', 'yes') });
+      metrics.push({ label: 'Study w/ Salai', val: pct(pHistory, 'salai_study', 'yes') });
+      metrics.push({ label: 'Slept Early', val: pct(pHistory, 'sleep_early', 'yes') });
+      metrics.push({ label: 'No Arguments', val: pct(pHistory, 'argument', 'no') });
+    } else {
+      metrics.push({ label: 'Woke Early', val: pctEmoji(pHistory, 'woke_early', 'Yes') });
+      metrics.push({ label: 'School Ontime', val: pctEmoji(pHistory, 'school_ontime', 'Yes') });
+      metrics.push({ label: 'Drank Water', val: pctEmoji(pHistory, 'water_school', 'Yes') });
+      metrics.push({ label: 'Studied', val: pctEmoji(pHistory, 'study', 'Yes') });
+      metrics.push({ label: 'MagicPot', val: pctEmoji(pHistory, 'magic_pot', 'Yes') });
+      metrics.push({ label: 'Physical Play', val: pctEmoji(pHistory, 'physical_play', 'Yes') });
+      metrics.push({ label: 'Slept Early', val: pctEmoji(pHistory, 'sleep_early', 'Yes') });
+    }
+
+    // Mood average
+    const moods = pHistory.map(h => h.answers && h.answers.mood).filter(v => typeof v === 'number');
+    const avgMood = moods.length ? (moods.reduce((a,b)=>a+b,0)/moods.length).toFixed(1) : null;
+
+    const scoreColor = score >= 70 ? '#16a34a' : score >= 40 ? '#f59e0b' : '#ef4444';
+
+    html += `<div class="insight-card">
+      <h3>${pNames[p]} — Week Score: <span style="color:${scoreColor}">${score}%</span> ${score>=70?'🌟':score>=40?'📈':'💪'}</h3>
+      ${avgMood ? `<p style="font-size:0.82rem;color:var(--text-light);font-weight:700;margin-bottom:10px;">Avg Mood: ${avgMood}/5 — ${getMoodEmoji(avgMood)}</p>` : ''}
+      ${metrics.map(m => `
+        <div class="mini-bar-row">
+          <div class="mini-bar-label">${m.label}</div>
+          <div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${m.val}%"></div></div>
+          <div class="mini-bar-pct">${m.val}%</div>
+        </div>
+      `).join('')}
+      ${generateInsightText(p, pHistory)}
+    </div>`;
+  });
+
+  // Grocery insights
+  if (state.groceryItems && state.groceryItems.length > 0) {
+    html += buildGroceryInsightCard();
+  }
+
+  content.innerHTML = html;
+}
+
+function pct(arr, key, val) {
+  if (!arr.length) return 0;
+  return Math.round((arr.filter(h => h.answers && h.answers[key] === val).length / arr.length) * 100);
+}
+
+function pctEmoji(arr, key, partial) {
+  if (!arr.length) return 0;
+  return Math.round((arr.filter(h => h.answers && typeof h.answers[key] === 'string' && h.answers[key].includes(partial)).length / arr.length) * 100);
+}
+
+function getMoodEmoji(v) {
+  if (v >= 4.5) return '😄 Excellent!';
+  if (v >= 3.5) return '😊 Good';
+  if (v >= 2.5) return '😐 Average';
+  return '😔 Needs attention';
+}
+
+function generateInsightText(profile, pHistory) {
+  const tips = [];
+  if (profile === 'dad') {
+    if (pct(pHistory,'exercise','yes') < 50) tips.push('💪 Exercise consistency needs improvement. Even 15 min walks help!');
+    if (pct(pHistory,'moolamanthiram','yes') < 70) tips.push('🙏 Try setting a morning alarm for Moolamanthiram.');
+    if (pct(pHistory,'side_hustle','yes') < 50) tips.push('🚀 Block a dedicated 45-min slot daily for side hustle work.');
+    if (pct(pHistory,'book','yes') < 50) tips.push('📚 Keep your book on the breakfast table — read while eating!');
+    if (pct(pHistory,'argument','yes') > 30) tips.push('🤝 Multiple argument days noted. Consider a weekly "no-conflict" pact with Raveena.');
+  } else if (profile === 'mom') {
+    if (pct(pHistory,'salai_story','yes') < 70) tips.push('📖 Salai loves MagicPot! Try to read at least 1 story every evening.');
+    if (pct(pHistory,'sleep_early','yes') < 50) tips.push('🌙 You deserve rest! Aim for lights out by 10:00 PM.');
+    if (pct(pHistory,'exercise','yes') < 50) tips.push('💪 A 20-min morning walk can transform your energy all day!');
+    if (pct(pHistory,'rest','yes') < 50) tips.push('😴 Please take short naps when Salai naps — self-care matters!');
+  } else {
+    if (pctEmoji(pHistory,'school_ontime','Yes') < 60) tips.push('⏰ Let\'s prepare school bag the night before to leave on time!');
+    if (pctEmoji(pHistory,'water_school','Yes') < 70) tips.push('💧 Put a fun sticker on Salai\'s water bottle to remind her!');
+    if (pctEmoji(pHistory,'physical_play','Yes') < 70) tips.push('🏃 30 min outdoor play daily is great for growing up strong!');
+  }
+  if (!tips.length) tips.push('🌟 Amazing consistency this week! Keep it up!');
+  return `<div style="margin-top:12px;padding:12px;background:var(--pink-50);border-radius:12px;border:1.5px solid var(--pink-200);">
+    <div style="font-size:0.78rem;font-weight:800;color:var(--pink-500);margin-bottom:6px;">💡 INSIGHTS & TIPS</div>
+    ${tips.map(t=>`<div style="font-size:0.82rem;color:var(--text-mid);font-weight:600;margin-bottom:4px;">${t}</div>`).join('')}
+  </div>`;
+}
+
+function buildGroceryInsightCard() {
+  const items = state.groceryItems || [];
+  const rows = items.map(item => {
+    const finCount = (item.finishedDates || []).length;
+    const purchasedDaysAgo = item.purchasedDate ?
+      Math.round((new Date() - new Date(item.purchasedDate + 'T00:00:00')) / (1000*3600*24)) : 0;
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1.5px solid var(--pink-100);">
+      <div>
+        <div style="font-weight:700;font-size:0.9rem;color:var(--text-dark);">🛒 ${item.name}</div>
+        <div style="font-size:0.75rem;color:var(--text-light);">Bought ${purchasedDaysAgo}d ago ${item.rate?'• ₹'+item.rate:''}</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-weight:800;font-size:0.9rem;color:var(--pink-500);">${finCount} time${finCount!==1?'s':''} finished</div>
+        <div style="font-size:0.75rem;color:${item.todayStatus==='finished'?'#dc2626':'#16a34a'};font-weight:700;">${item.todayStatus==='finished'?'🔴 Finished today':'🟢 Still using'}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  return `<div class="insight-card">
+    <h3>🛒 Grocery Usage Tracker</h3>
+    <p style="font-size:0.8rem;color:var(--text-light);font-weight:600;margin-bottom:10px;">Track how long each item lasts in your household.</p>
+    ${rows || '<p style="color:var(--text-light);font-size:0.85rem;font-weight:600;">No grocery items tracked yet.</p>'}
+  </div>`;
+}
+
+// ============================================================
+//  WEEKLY INSIGHTS EMAIL
+// ============================================================
+function checkWeeklyInsights() {
+  const lastSent = state.lastInsightsSent ? new Date(state.lastInsightsSent) : null;
+  const now = new Date();
+  if (!lastSent || (now - lastSent) > 7 * 24 * 3600 * 1000) {
+    const totalThisWeek = (state.history || []).filter(h => (now - new Date(h.date)) < 7*24*3600*1000).length;
+    if (totalThisWeek >= 7) {
+      sendInsightsEmail();
+      state.lastInsightsSent = now.toISOString();
+      saveState();
+    }
+  }
+}
+
+async function sendInsightsEmail() {
+  const history = state.history || [];
+  const last7 = history.filter(h => (new Date()-new Date(h.date)) < 7*24*3600*1000);
+
+  const payload = {
+    type: 'weekly_insights',
+    email: EMAIL_HARDCODED,
+    data: last7,
+    groceryItems: state.groceryItems,
+    generatedAt: new Date().toISOString()
+  };
+
+  try {
+    await fetch(GAS_URL_HARDCODED, {
+      method: 'POST', mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    showToast('📧 Insights sent to email!');
+  } catch(e) {
+    showToast('❌ Failed to send. Check your internet connection.');
+  }
+}
+
+// ============================================================
+//  SETUP / CONFIG
+// ============================================================
+const GAS_SCRIPT = `// Google Apps Script - Salai Family Tracker
+// Deploy as Web App → Anyone can access
+
+const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE';
+const EMAIL = 'salaikarthikeyanganesan@gmail.com';
+
+function doPost(e) {
+  try {
+    const data = JSON.parse(e.postData.contents);
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    
+    if (data.type === 'weekly_insights') {
+      sendWeeklyReport(data);
+    } else {
+      saveCheckin(ss, data);
+      sendNotificationEmail(data);
+    }
+    return ContentService.createTextOutput(JSON.stringify({status:'ok'}))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService.createTextOutput(JSON.stringify({error:err.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function saveCheckin(ss, data) {
+  const sheetName = data.profile.charAt(0).toUpperCase() + data.profile.slice(1);
+  let sheet = ss.getSheetByName(sheetName);
+  if (!sheet) sheet = ss.insertSheet(sheetName);
+  
+  if (sheet.getLastRow() === 0) {
+    const headers = ['Timestamp','Date','Profile'].concat(Object.keys(data.answers));
+    sheet.appendRow(headers);
+  }
+  const row = [data.timestamp, data.date, data.profile].concat(Object.values(data.answers));
+  sheet.appendRow(row);
+}
+
+function sendNotificationEmail(data) {
+  const names = {dad:'Karthik (Dad)', mom:'Raveena (Mom)', daughter:'Salai (Daughter)'};
+  const name = names[data.profile] || data.profile;
+  const subject = '✅ ' + name + ' checked in - Salai Family Tracker';
+  const body = name + ' has submitted their daily check-in for ' + data.date + '.\\n\\nAnswers:\\n' 
+    + Object.entries(data.answers).map(([k,v]) => k + ': ' + v).join('\\n')
+    + '\\n\\n🌸 Salai Family Tracker';
+  GmailApp.sendEmail(EMAIL, subject, body);
+}
+
+function sendWeeklyReport(data) {
+  const subject = '📊 Weekly Family Insights - Salai Family Tracker';
+  const entryCount = data.data ? data.data.length : 0;
+  const body = 'Your weekly Salai Family Tracker report is ready!\\n\\n'
+    + 'Total check-ins this week: ' + entryCount + '\\n'
+    + 'Open the app to view detailed insights and charts.\\n'
+    + '\\nGenerated: ' + data.generatedAt
+    + '\\n\\n🌸 Salai Family Tracker';
+  GmailApp.sendEmail(EMAIL, subject, body);
+}`;
+
+function initSetup() {
+  document.getElementById('gas-code-block').textContent = GAS_SCRIPT;
+  const savedUrl = state.gasUrl || localStorage.getItem('sft_gas_url') || '';
+  document.getElementById('gas-url-input').value = savedUrl;
+  document.getElementById('email-input').value = state.email || 'salaikarthikeyanganesan@gmail.com';
+}
+
+function copyGASCode() {
+  navigator.clipboard.writeText(GAS_SCRIPT).then(() => showToast('📋 Script copied!')).catch(() => {
+    showToast('⚠️ Please manually copy the code');
+  });
+}
+
+function saveConfig() {
+  const url = document.getElementById('gas-url-input').value.trim();
+  const email = document.getElementById('email-input').value.trim();
+  if (url) {
+    state.gasUrl = url;
+    localStorage.setItem('sft_gas_url', url);
+  }
+  if (email) state.email = email;
+  saveState();
+  showToast('✅ Configuration saved!');
+}
+
+// ============================================================
+//  TOAST
+// ============================================================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ============================================================
+//  INIT
+// ============================================================
+function init() {
+  loadState();
+  updateHomeUI();
+  initSetup();
+
+  // Set today date
+  document.getElementById('home-date').textContent = formatDate(todayStr());
+
+  // Reset todayStatus on grocery items each day
+  const today = todayStr();
+  if (state.groceryItems) {
+    state.groceryItems.forEach(item => {
+      if (item.lastStatusDate !== today) {
+        item.todayStatus = 'using';
+        item.lastStatusDate = today;
+      }
+    });
+    saveState();
+  }
+}
+
+window.addEventListener('load', init);
+</script>
+</body>
+</html>
