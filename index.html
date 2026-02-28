@@ -37,7 +37,6 @@
     overflow-x: hidden;
   }
 
-  /* ---- BACKGROUNDS ---- */
   .bg-blobs {
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
     overflow: hidden;
@@ -51,11 +50,8 @@
   .bg-blobs span:nth-child(3) { width: 200px; height: 200px; background: #ffd6e8; top: 40%; left: 50%; }
 
   .screen { position: relative; z-index: 1; min-height: 100vh; }
-
-  /* ---- HIDDEN ---- */
   .hidden { display: none !important; }
 
-  /* ---- HOME SCREEN ---- */
   #home {
     display: flex; flex-direction: column; align-items: center;
     padding: 40px 20px 60px;
@@ -69,10 +65,7 @@
     line-height: 1.1;
     text-shadow: 0 2px 12px rgba(233,30,140,0.15);
   }
-  .home-header p {
-    font-size: 0.95rem; color: var(--text-light); margin-top: 6px;
-    font-weight: 600;
-  }
+  .home-header p { font-size: 0.95rem; color: var(--text-light); margin-top: 6px; font-weight: 600; }
   .date-badge {
     background: var(--white); border: 2px solid var(--pink-200);
     border-radius: 50px; padding: 8px 20px;
@@ -122,15 +115,8 @@
     margin-bottom: 14px;
     box-shadow: 0 4px 16px rgba(233,30,140,0.2);
   }
-  .profile-name {
-    font-size: 1.3rem; font-weight: 900; color: var(--text-dark);
-    margin-bottom: 4px;
-  }
-  .profile-role {
-    font-size: 0.8rem; font-weight: 700; color: var(--text-light);
-    text-transform: uppercase; letter-spacing: 0.06em;
-    margin-bottom: 14px;
-  }
+  .profile-name { font-size: 1.3rem; font-weight: 900; color: var(--text-dark); margin-bottom: 4px; }
+  .profile-role { font-size: 0.8rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
   .profile-status {
     display: inline-flex; align-items: center; gap: 5px;
     font-size: 0.82rem; font-weight: 700;
@@ -138,9 +124,7 @@
     border: 1.5px solid var(--pink-200);
     border-radius: 50px; padding: 4px 12px;
   }
-  .profile-status.done {
-    background: #f0fff4; color: #16a34a; border-color: #86efac;
-  }
+  .profile-status.done { background: #f0fff4; color: #16a34a; border-color: #86efac; }
   .checkin-btn {
     margin-top: 16px;
     background: linear-gradient(135deg, var(--pink-400), var(--pink-500));
@@ -153,14 +137,8 @@
   }
   .checkin-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(233,30,140,0.4); }
 
-  /* ---- QUICK STATS on HOME ---- */
-  .home-stats {
-    margin-top: 48px; width: 100%; max-width: 900px;
-  }
-  .home-stats h2 {
-    font-size: 1.1rem; font-weight: 800; color: var(--text-mid);
-    margin-bottom: 16px; text-align: center;
-  }
+  .home-stats { margin-top: 48px; width: 100%; max-width: 900px; }
+  .home-stats h2 { font-size: 1.1rem; font-weight: 800; color: var(--text-mid); margin-bottom: 16px; text-align: center; }
   .stats-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
   .stat-chip {
     background: var(--white); border: 2px solid var(--pink-100);
@@ -171,7 +149,6 @@
   .stat-chip .num { font-size: 1.8rem; font-weight: 900; color: var(--pink-500); }
   .stat-chip .lbl { font-size: 0.75rem; color: var(--text-light); font-weight: 700; }
 
-  /* ---- FORM SCREEN ---- */
   #form-screen {
     padding: 0 0 80px;
     max-width: 700px; margin: 0 auto;
@@ -184,11 +161,7 @@
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     position: relative; overflow: hidden;
   }
-  .form-header::after {
-    content: '🌸';
-    position: absolute; right: 20px; bottom: -10px;
-    font-size: 80px; opacity: 0.15;
-  }
+  .form-header::after { content: '🌸'; position: absolute; right: 20px; bottom: -10px; font-size: 80px; opacity: 0.15; }
   .back-btn {
     background: rgba(255,255,255,0.2); border: 1.5px solid rgba(255,255,255,0.4);
     color: white; border-radius: 50px; padding: 6px 16px;
@@ -197,29 +170,14 @@
     margin-bottom: 16px; display: inline-flex; align-items: center; gap: 5px;
   }
   .form-header-profile { display: flex; align-items: center; gap: 16px; }
-  .form-avatar {
-    width: 64px; height: 64px; border-radius: 50%;
-    object-fit: cover; object-position: top;
-    border: 3px solid rgba(255,255,255,0.6);
-  }
+  .form-avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; object-position: top; border: 3px solid rgba(255,255,255,0.6); }
   .form-header h2 { font-size: 1.5rem; font-weight: 900; }
   .form-header p { font-size: 0.85rem; opacity: 0.85; margin-top: 2px; }
 
-  .progress-bar-wrap {
-    margin: 20px 24px 0;
-  }
-  .progress-label {
-    display: flex; justify-content: space-between;
-    font-size: 0.8rem; font-weight: 700; color: var(--text-light);
-    margin-bottom: 6px;
-  }
-  .progress-bar {
-    height: 8px; background: var(--pink-100); border-radius: 10px; overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%; background: linear-gradient(90deg, var(--pink-400), var(--pink-500));
-    border-radius: 10px; transition: width 0.4s ease;
-  }
+  .progress-bar-wrap { margin: 20px 24px 0; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; color: var(--text-light); margin-bottom: 6px; }
+  .progress-bar { height: 8px; background: var(--pink-100); border-radius: 10px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--pink-400), var(--pink-500)); border-radius: 10px; transition: width 0.4s ease; }
 
   .questions-container { padding: 0 20px; }
 
@@ -230,21 +188,33 @@
     box-shadow: var(--shadow);
     animation: slideUp 0.3s ease;
   }
+
+  /* Reason follow-up card — slightly indented, different border */
+  .question-card.reason-card {
+    border-color: var(--pink-300);
+    background: #fff8fb;
+    margin-left: 16px;
+    position: relative;
+  }
+  .question-card.reason-card::before {
+    content: '↳';
+    position: absolute;
+    left: -20px;
+    top: 20px;
+    color: var(--pink-400);
+    font-size: 1.1rem;
+    font-weight: 900;
+  }
+
   @keyframes slideUp {
     from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .q-number {
-    font-size: 0.75rem; font-weight: 800; color: var(--pink-400);
-    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px;
-  }
-  .q-text {
-    font-size: 1rem; font-weight: 700; color: var(--text-dark);
-    margin-bottom: 14px; line-height: 1.4;
-  }
+  .q-number { font-size: 0.75rem; font-weight: 800; color: var(--pink-400); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .q-text { font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 14px; line-height: 1.4; }
+  .q-reason-label { font-size: 0.75rem; font-weight: 800; color: var(--pink-500); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; display: flex; align-items: center; gap: 4px; }
 
-  /* Yes/No toggle */
   .yn-group { display: flex; gap: 10px; }
   .yn-btn {
     flex: 1; padding: 12px; border-radius: 14px;
@@ -256,7 +226,6 @@
   .yn-btn.selected-yes { background: #f0fff4; border-color: #16a34a; color: #16a34a; }
   .yn-btn.selected-no { background: #fff0f0; border-color: #ef4444; color: #ef4444; }
 
-  /* Scale 1-5 */
   .scale-group { display: flex; gap: 8px; justify-content: space-between; }
   .scale-btn {
     flex: 1; padding: 12px 6px; border-radius: 12px;
@@ -268,7 +237,6 @@
   .scale-btn.selected { background: var(--pink-400); border-color: var(--pink-500); color: white; }
   .scale-labels { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-light); margin-top: 4px; font-weight: 600; }
 
-  /* Text input */
   .q-textarea {
     width: 100%; padding: 12px 14px; border: 2px solid var(--pink-200);
     border-radius: 14px; font-family: 'Nunito', sans-serif; font-size: 0.95rem;
@@ -278,7 +246,6 @@
   }
   .q-textarea:focus { border-color: var(--pink-400); background: white; }
 
-  /* Number input */
   .q-number-input {
     width: 100%; padding: 12px 14px; border: 2px solid var(--pink-200);
     border-radius: 14px; font-family: 'Nunito', sans-serif; font-size: 1rem;
@@ -287,7 +254,6 @@
   }
   .q-number-input:focus { border-color: var(--pink-400); background: white; }
 
-  /* Child emoji picker */
   .emoji-choice-group { display: flex; flex-wrap: wrap; gap: 10px; }
   .emoji-choice-btn {
     padding: 10px 16px; border-radius: 14px;
@@ -310,7 +276,6 @@
   .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(233,30,140,0.45); }
   .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-  /* ---- GROCERY SECTION ---- */
   .grocery-section {
     background: var(--white); border-radius: var(--radius);
     padding: 22px; margin-top: 16px;
@@ -351,20 +316,13 @@
     outline: none; background: var(--pink-50); width: 80px;
   }
 
-  /* ---- SUCCESS SCREEN ---- */
   #success-screen {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     min-height: 100vh; padding: 40px 20px; text-align: center;
   }
   .success-icon { font-size: 80px; margin-bottom: 20px; animation: bounce 0.6s ease; }
-  @keyframes bounce {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-  }
-  .success-screen h2 {
-    font-family: 'Pacifico', cursive; color: var(--pink-500);
-    font-size: 2rem; margin-bottom: 10px;
-  }
+  @keyframes bounce { 0%,100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+  .success-screen h2 { font-family: 'Pacifico', cursive; color: var(--pink-500); font-size: 2rem; margin-bottom: 10px; }
   .success-screen p { color: var(--text-light); font-size: 1rem; font-weight: 600; margin-bottom: 28px; }
   .success-home-btn {
     background: linear-gradient(135deg, var(--pink-400), var(--pink-600));
@@ -374,7 +332,6 @@
     box-shadow: 0 6px 20px rgba(233,30,140,0.3);
   }
 
-  /* ---- INSIGHTS SCREEN ---- */
   #insights-screen { padding: 0 0 80px; max-width: 700px; margin: 0 auto; }
   .insights-header {
     background: linear-gradient(135deg, #ff4d8d, #c2185b);
@@ -396,19 +353,17 @@
   .mini-bar-fill { height: 100%; background: linear-gradient(90deg, var(--pink-300), var(--pink-500)); border-radius: 10px; transition: width 0.6s ease; }
   .mini-bar-pct { font-size: 0.8rem; font-weight: 800; color: var(--pink-500); width: 36px; text-align: right; }
 
-  /* ---- SETUP SCREEN ---- */
-  #setup-screen {
-    padding: 40px 20px; max-width: 600px; margin: 0 auto;
-    display: flex; flex-direction: column; align-items: center;
+  /* Reasons insight block */
+  .reasons-block {
+    background: #fff0f6; border: 1.5px solid var(--pink-200);
+    border-radius: 12px; padding: 12px 14px; margin-top: 10px;
   }
-  #setup-screen h2 { font-family: 'Pacifico', cursive; color: var(--pink-500); font-size: 1.6rem; margin-bottom: 8px; }
-  #setup-screen p { color: var(--text-light); font-weight: 600; font-size: 0.9rem; margin-bottom: 28px; text-align: center; }
-  .setup-card {
-    background: var(--white); border-radius: var(--radius);
-    padding: 24px; width: 100%; border: 2px solid var(--pink-100);
-    box-shadow: var(--shadow); margin-bottom: 16px;
-  }
-  .setup-card h3 { font-size: 1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 12px; }
+  .reasons-block h4 { font-size: 0.78rem; font-weight: 800; color: var(--pink-500); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .reason-entry { font-size: 0.82rem; color: var(--text-mid); font-weight: 600; margin-bottom: 4px; padding-left: 8px; border-left: 2px solid var(--pink-300); }
+
+  #config-screen { padding: 20px; max-width: 700px; margin: 0 auto 80px; }
+  .config-section { background: var(--white); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; border: 2px solid var(--pink-100); box-shadow: var(--shadow); }
+  .config-section h3 { font-size: 1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 12px; }
   .setup-input {
     width: 100%; padding: 10px 14px; border: 2px solid var(--pink-200);
     border-radius: 12px; font-family: 'Nunito', sans-serif; font-size: 0.95rem;
@@ -435,7 +390,6 @@
     width: 100%;
   }
 
-  /* ---- NAV BAR ---- */
   .bottom-nav {
     position: fixed; bottom: 0; left: 0; right: 0;
     background: var(--white); border-top: 2px solid var(--pink-100);
@@ -451,12 +405,6 @@
   .nav-btn .nav-icon { font-size: 1.3rem; }
   .nav-btn.active { color: var(--pink-500); }
 
-  /* ---- CONFIG SCREEN ---- */
-  #config-screen { padding: 20px; max-width: 700px; margin: 0 auto 80px; }
-  .config-section { background: var(--white); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; border: 2px solid var(--pink-100); box-shadow: var(--shadow); }
-  .config-section h3 { font-size: 1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 12px; }
-
-  /* TOAST */
   .toast {
     position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
     background: var(--text-dark); color: white; padding: 10px 24px;
@@ -466,22 +414,19 @@
   }
   .toast.show { opacity: 1; }
 
-  /* Responsive */
   @media (max-width: 600px) {
     .profiles-grid { flex-direction: column; align-items: center; }
     .profile-card { width: 100%; max-width: 320px; }
+    .question-card.reason-card { margin-left: 8px; }
   }
 </style>
 </head>
 <body>
 
-<div class="bg-blobs">
-  <span></span><span></span><span></span>
-</div>
-
+<div class="bg-blobs"><span></span><span></span><span></span></div>
 <div id="toast" class="toast"></div>
 
-<!-- ============ HOME SCREEN ============ -->
+<!-- HOME -->
 <div id="home" class="screen">
   <div class="home-header">
     <div class="logo-icon">🌸</div>
@@ -489,9 +434,7 @@
     <p>Growing together, one day at a time</p>
   </div>
   <div class="date-badge">📅 <span id="home-date"></span></div>
-
   <div class="profiles-grid">
-    <!-- DAD -->
     <div class="profile-card dad" onclick="openProfile('dad')">
       <img class="profile-avatar" id="dad-avatar" src="" alt="Karthik">
       <div class="profile-name">Karthik</div>
@@ -499,8 +442,6 @@
       <div class="profile-status" id="dad-status">⭕ Not checked in</div>
       <button class="checkin-btn">Check In Today</button>
     </div>
-
-    <!-- MOM -->
     <div class="profile-card mom" onclick="openProfile('mom')">
       <img class="profile-avatar" id="mom-avatar" src="" alt="Raveena">
       <div class="profile-name">Raveena</div>
@@ -508,8 +449,6 @@
       <div class="profile-status" id="mom-status">⭕ Not checked in</div>
       <button class="checkin-btn">Check In Today</button>
     </div>
-
-    <!-- DAUGHTER -->
     <div class="profile-card daughter" onclick="openProfile('daughter')">
       <img class="profile-avatar" id="daughter-avatar" src="" alt="Salai">
       <div class="profile-name">Salai</div>
@@ -518,8 +457,6 @@
       <button class="checkin-btn">Check In Today</button>
     </div>
   </div>
-
-  <!-- QUICK STATS -->
   <div class="home-stats">
     <h2>📈 This Week's Family Score</h2>
     <div class="stats-row">
@@ -530,7 +467,7 @@
   </div>
 </div>
 
-<!-- ============ FORM SCREEN ============ -->
+<!-- FORM -->
 <div id="form-screen" class="screen hidden">
   <div class="form-header">
     <button class="back-btn" onclick="goHome()">← Back</button>
@@ -550,12 +487,10 @@
     <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
   </div>
   <div class="questions-container" id="questions-container"></div>
-  <button class="submit-btn" id="submit-btn" onclick="submitForm()">
-    ✨ Submit My Check-in
-  </button>
+  <button class="submit-btn" id="submit-btn" onclick="submitForm()">✨ Submit My Check-in</button>
 </div>
 
-<!-- ============ SUCCESS SCREEN ============ -->
+<!-- SUCCESS -->
 <div id="success-screen" class="screen hidden">
   <div class="success-icon">🎉</div>
   <h2>Well Done!</h2>
@@ -563,7 +498,7 @@
   <button class="success-home-btn" onclick="goHome()">🏠 Back to Home</button>
 </div>
 
-<!-- ============ INSIGHTS SCREEN ============ -->
+<!-- INSIGHTS -->
 <div id="insights-screen" class="screen hidden">
   <div class="insights-header">
     <button class="back-btn" onclick="showScreen('home')">← Back</button>
@@ -576,11 +511,10 @@
   </div>
 </div>
 
-<!-- ============ SETUP / CONFIG SCREEN ============ -->
+<!-- CONFIG -->
 <div id="config-screen" class="screen hidden">
   <h2 style="font-family:'Pacifico',cursive;color:var(--pink-500);font-size:1.4rem;text-align:center;margin-bottom:4px;padding-top:20px;">⚙️ Setup & Config</h2>
   <p style="color:var(--text-light);font-size:0.85rem;text-align:center;margin-bottom:20px;font-weight:600;">Google Sheets Integration & App Settings</p>
-
   <div class="config-section">
     <h3>📋 Step 1: Google Apps Script Setup</h3>
     <p style="font-size:0.85rem;color:var(--text-light);font-weight:600;margin-bottom:10px;">
@@ -592,17 +526,15 @@
     <div class="code-block" id="gas-code-block">Loading script...</div>
     <button class="copy-btn" onclick="copyGASCode()">📋 Copy Script</button>
   </div>
-
   <div class="config-section">
     <h3>🔗 Step 2: Paste Your Web App URL</h3>
     <input type="url" class="setup-input" id="gas-url-input" placeholder="https://script.google.com/macros/s/..." />
     <input type="email" class="setup-input" id="email-input" placeholder="Your email: salaikarthikeyanganesan@gmail.com" value="salaikarthikeyanganesan@gmail.com" />
     <button class="setup-done-btn" onclick="saveConfig()">💾 Save Configuration</button>
   </div>
-
   <div class="config-section">
     <h3>📸 Profile Images</h3>
-    <p style="font-size:0.82rem;color:var(--text-light);font-weight:600;margin-bottom:10px;">The images uploaded are already set. You can update them here:</p>
+    <p style="font-size:0.82rem;color:var(--text-light);font-weight:600;margin-bottom:10px;">Upload photos for each family member:</p>
     <label style="font-size:0.85rem;font-weight:700;color:var(--text-mid);">Dad (Karthik)</label>
     <input type="file" accept="image/*" onchange="updateAvatar('dad', this)" style="margin-bottom:10px;display:block;font-size:0.82rem;">
     <label style="font-size:0.85rem;font-weight:700;color:var(--text-mid);">Mom (Raveena)</label>
@@ -612,7 +544,7 @@
   </div>
 </div>
 
-<!-- ============ BOTTOM NAV ============ -->
+<!-- NAV -->
 <nav class="bottom-nav">
   <button class="nav-btn active" id="nav-home" onclick="showScreen('home'); setActiveNav('nav-home')">
     <span class="nav-icon">🏠</span>Home
@@ -626,32 +558,25 @@
 </nav>
 
 <script>
-// ============================================================
-//  DATA & STATE
-// ============================================================
-let state = {
-  gasUrl: '',
-  email: 'salaikarthikeyanganesan@gmail.com',
-  currentProfile: null,
-  responses: {},       // { dad: {date, answers}, mom: ..., daughter: ... }
-  groceryItems: [],    // [{name, rate, status, purchasedDate, finishedDates:[]}]
-  history: [],         // array of all submitted check-ins
-  streak: 0,
-};
-
-// ---- HARDCODED CONFIG (no setup needed) ----
+// ─── CONSTANTS ────────────────────────────────────────────────────────────────
 const GAS_URL_HARDCODED = 'https://script.google.com/macros/s/AKfycbwcI9h7ow-Erw4uUSwKXnwOy_gsAPg1gvzET4bVAH87EKShAqFY1sDPqujqmsYB-qVPHA/exec';
 const EMAIL_HARDCODED   = 'salaikarthikeyanganesan@gmail.com';
 
-// Load from localStorage
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let state = {
+  gasUrl: '',
+  email: EMAIL_HARDCODED,
+  currentProfile: null,
+  responses: {},
+  groceryItems: [],
+  history: [],
+  streak: 0,
+};
+
 function loadState() {
   try {
     const saved = localStorage.getItem('sft_state');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      Object.assign(state, parsed);
-    }
-    // Always use hardcoded values
+    if (saved) Object.assign(state, JSON.parse(saved));
     state.gasUrl = GAS_URL_HARDCODED;
     state.email  = EMAIL_HARDCODED;
   } catch(e) {
@@ -664,10 +589,7 @@ function saveState() {
   try { localStorage.setItem('sft_state', JSON.stringify(state)); } catch(e) {}
 }
 
-// Today's date
-function todayStr() {
-  return new Date().toISOString().split('T')[0];
-}
+function todayStr() { return new Date().toISOString().split('T')[0]; }
 
 function formatDate(d) {
   return new Date(d + 'T00:00:00').toLocaleDateString('en-IN', {
@@ -675,24 +597,39 @@ function formatDate(d) {
   });
 }
 
-// ============================================================
-//  QUESTIONS
-// ============================================================
+// ─── QUESTIONS ────────────────────────────────────────────────────────────────
+// Convention: for every NO-triggered reason, id = originalId + '_reason'
+// condition checks answer === 'no' (or emoji equivalent)
+
 const QUESTIONS = {
   dad: [
     { id: 'exercise', type: 'yn', text: '💪 Did you exercise today?' },
-    { id: 'exercise_min', type: 'number', text: '⏱️ How many minutes did you exercise?', condition: (a) => a.exercise === 'yes' },
+    { id: 'exercise_min', type: 'number', text: '⏱️ How many minutes did you exercise?', condition: a => a.exercise === 'yes' },
+    { id: 'exercise_reason', type: 'reason', text: '🤔 Why couldn\'t you exercise today?', placeholder: 'Too tired, no time, unwell...', condition: a => a.exercise === 'no' },
+
     { id: 'newspaper', type: 'yn', text: '📰 Did you read the newspaper this morning?' },
+    { id: 'newspaper_reason', type: 'reason', text: '🤔 Why did you skip the newspaper today?', placeholder: 'Rushed morning, forgot, no time...', condition: a => a.newspaper === 'no' },
+
     { id: 'book', type: 'yn', text: '📚 Did you read your book today?' },
-    { id: 'book_pages', type: 'number', text: '📖 How many pages did you read?', condition: (a) => a.book === 'yes' },
+    { id: 'book_pages', type: 'number', text: '📖 How many pages did you read?', condition: a => a.book === 'yes' },
+    { id: 'book_reason', type: 'reason', text: '🤔 Why couldn\'t you read today?', placeholder: 'Too busy, tired, forgot...', condition: a => a.book === 'no' },
+
     { id: 'moolamanthiram', type: 'yn', text: '🙏 Did you say Moolamanthiram today?' },
+    { id: 'moolamanthiram_reason', type: 'reason', text: '🤔 What stopped you from saying Moolamanthiram?', placeholder: 'Forgot, rushed, slept late...', condition: a => a.moolamanthiram === 'no' },
+
     { id: 'side_hustle', type: 'yn', text: '🚀 Did you work on your side hustle today?' },
-    { id: 'side_hustle_mins', type: 'number', text: '⏱️ How many minutes on side hustle?', condition: (a) => a.side_hustle === 'yes' },
+    { id: 'side_hustle_mins', type: 'number', text: '⏱️ How many minutes on side hustle?', condition: a => a.side_hustle === 'yes' },
+    { id: 'side_hustle_reason', type: 'reason', text: '🤔 Why couldn\'t you work on side hustle today?', placeholder: 'Work overload, tired, distracted...', condition: a => a.side_hustle === 'no' },
+
     { id: 'screen_time', type: 'scale', text: '📱 How would you rate your mobile screen time today?', scaleLabels: ['Very Low', 'Very High'] },
     { id: 'work_productive', type: 'scale', text: '💼 How productive was your work today?', scaleLabels: ['Not at all', 'Very much'] },
+
     { id: 'argument', type: 'yn', text: '🤝 Did you have any arguments with Raveena today?' },
-    { id: 'argument_reason', type: 'text', text: '📝 Briefly, what was the reason?', condition: (a) => a.argument === 'yes' },
+    { id: 'argument_reason', type: 'text', text: '📝 Briefly, what was the reason?', condition: a => a.argument === 'yes' },
+
     { id: 'time_with_salai', type: 'yn', text: '👧 Did you spend quality time with Salai today?' },
+    { id: 'time_with_salai_reason', type: 'reason', text: '🤔 Why couldn\'t you spend time with Salai today?', placeholder: 'Came home late, work, tired...', condition: a => a.time_with_salai === 'no' },
+
     { id: 'football', type: 'yn', text: '⚽ Did you watch late-night football today?' },
     { id: 'sleep_time', type: 'text', text: '😴 What time did you go to sleep last night? (e.g., 11:00 PM)' },
     { id: 'mood', type: 'scale', text: '😊 How is your overall mood today?', scaleLabels: ['😞 Low', '😄 Great'] },
@@ -700,58 +637,95 @@ const QUESTIONS = {
     { id: 'gratitude', type: 'text', text: '🌸 One thing you are grateful for today?' },
     { id: 'anything_else', type: 'text', text: '💬 Anything else you want to add for the day?' },
   ],
+
   mom: [
     { id: 'exercise', type: 'yn', text: '💪 Did you exercise today?' },
-    { id: 'exercise_min', type: 'number', text: '⏱️ How many minutes did you exercise?', condition: (a) => a.exercise === 'yes' },
+    { id: 'exercise_min', type: 'number', text: '⏱️ How many minutes did you exercise?', condition: a => a.exercise === 'yes' },
+    { id: 'exercise_reason', type: 'reason', text: '🤔 Why couldn\'t you exercise today?', placeholder: 'No time, tired, unwell...', condition: a => a.exercise === 'no' },
+
     { id: 'moolamanthiram', type: 'yn', text: '🙏 Did you say Moolamanthiram today?' },
+    { id: 'moolamanthiram_reason', type: 'reason', text: '🤔 What stopped you from saying Moolamanthiram?', placeholder: 'Forgot, rushed morning...', condition: a => a.moolamanthiram === 'no' },
+
     { id: 'salai_story', type: 'yn', text: '📖 Did you read MagicPot stories to Salai today?' },
+    { id: 'salai_story_reason', type: 'reason', text: '🤔 Why couldn\'t you read to Salai today?', placeholder: 'Salai was tired, no time, forgot...', condition: a => a.salai_story === 'no' },
+
     { id: 'salai_study', type: 'yn', text: '✏️ Did you do Salai\'s study session today?' },
+    { id: 'salai_study_reason', type: 'reason', text: '🤔 Why was the study session skipped today?', placeholder: 'She was unwell, no time, holiday...', condition: a => a.salai_study === 'no' },
+
     { id: 'salai_play', type: 'yn', text: '🎮 Did you play with Salai today?' },
+    { id: 'salai_play_reason', type: 'reason', text: '🤔 Why couldn\'t you play with Salai today?', placeholder: 'Too busy in kitchen, tired, guests...', condition: a => a.salai_play === 'no' },
+
     { id: 'kitchen_time', type: 'scale', text: '🍳 How much time was spent on kitchen work today?', scaleLabels: ['Very little', 'Too much'] },
+
     { id: 'careless_mistake', type: 'yn', text: '⚠️ Did any careless mistake happen today?' },
-    { id: 'mistake_detail', type: 'text', text: '📝 What was the mistake? (so we can improve)', condition: (a) => a.careless_mistake === 'yes' },
+    { id: 'mistake_detail', type: 'text', text: '📝 What was the mistake? (so we can improve)', condition: a => a.careless_mistake === 'yes' },
+
     { id: 'argument', type: 'yn', text: '🤝 Any argument with Karthik today?' },
+
     { id: 'rest', type: 'yn', text: '😴 Did you take a rest/nap today?' },
+    { id: 'rest_reason', type: 'reason', text: '🤔 Why couldn\'t you rest today?', placeholder: 'Too many chores, Salai needed attention, couldn\'t sleep...', condition: a => a.rest === 'no' },
+
     { id: 'sleep_early', type: 'yn', text: '🌙 Did you sleep before 10:30 PM last night?' },
+    { id: 'sleep_early_reason', type: 'reason', text: '🤔 What kept you up past 10:30 PM?', placeholder: 'Chores pending, Karthik watching football, couldn\'t sleep...', condition: a => a.sleep_early === 'no' },
+
     { id: 'me_time', type: 'yn', text: '🌺 Did you get any personal time for yourself today?' },
+    { id: 'me_time_reason', type: 'reason', text: '🤔 Why couldn\'t you get personal time today?', placeholder: 'Full day with Salai, household work, guests...', condition: a => a.me_time === 'no' },
+
     { id: 'mood', type: 'scale', text: '😊 How is your overall mood today?', scaleLabels: ['😞 Low', '😄 Great'] },
     { id: 'energy', type: 'scale', text: '⚡ How was your energy level today?', scaleLabels: ['Drained', 'Energized'] },
     { id: 'grocery_purchased', type: 'yn', text: '🛒 Did you purchase any grocery items today?' },
-    // grocery section handled separately
     { id: 'gratitude', type: 'text', text: '🌸 One thing you are grateful for today?' },
     { id: 'anything_else', type: 'text', text: '💬 Anything else you want to add for the day?' },
   ],
+
   daughter: [
     { id: 'woke_early', type: 'emoji', text: '🌅 Did Salai wake up early today?', emojis: ['😄 Yes!', '😴 No...'] },
+    { id: 'woke_early_reason', type: 'reason', text: '🤔 Why did Salai wake up late?', placeholder: 'Slept late, unwell, didn\'t want to...', condition: a => a.woke_early && a.woke_early.includes('No') },
+
     { id: 'school_ontime', type: 'emoji', text: '🏫 Did Salai go to school on time?', emojis: ['✅ Yes!', '⏰ Late...', '🏠 No school'] },
+    { id: 'school_ontime_reason', type: 'reason', text: '🤔 Why was Salai late or absent?', placeholder: 'Woke late, traffic, unwell, holiday...', condition: a => a.school_ontime && (a.school_ontime.includes('Late') || a.school_ontime.includes('No school')) },
+
     { id: 'water_school', type: 'emoji', text: '💧 Did Salai drink water at school?', emojis: ['👍 Yes!', '👎 Forgot'] },
+    { id: 'water_school_reason', type: 'reason', text: '🤔 Why did Salai forget to drink water?', placeholder: 'Too busy playing, forgot bottle, didn\'t feel like it...', condition: a => a.water_school && a.water_school.includes('Forgot') },
+
     { id: 'snacks_finished', type: 'emoji', text: '🍎 Did Salai finish her snacks at school?', emojis: ['😋 Yes!', '🙁 No'] },
+    { id: 'snacks_finished_reason', type: 'reason', text: '🤔 Why didn\'t Salai finish her snacks?', placeholder: 'Not hungry, didn\'t like it, was playing...', condition: a => a.snacks_finished && a.snacks_finished.includes('No') },
+
     { id: 'toilet', type: 'emoji', text: '🚽 Did Salai go to the toilet today?', emojis: ['✅ Yes!', '❌ Skipped'] },
+    { id: 'toilet_reason', type: 'reason', text: '🤔 Why did Salai skip the toilet?', placeholder: 'Held it in, didn\'t feel like it, was playing...', condition: a => a.toilet && a.toilet.includes('Skipped') },
+
     { id: 'moolamanthiram', type: 'emoji', text: '🙏 Did Salai say Moolamanthiram today?', emojis: ['✅ Yes!', '❌ No'] },
+    { id: 'moolamanthiram_reason', type: 'reason', text: '🤔 Why did Salai skip Moolamanthiram today?', placeholder: 'Forgot, rushed, was in a bad mood...', condition: a => a.moolamanthiram && a.moolamanthiram.includes('No') },
+
     { id: 'study', type: 'emoji', text: '✏️ Did Salai study today?', emojis: ['📚 Yes!', '🙈 No'] },
+    { id: 'study_reason', type: 'reason', text: '🤔 Why didn\'t Salai study today?', placeholder: 'Holiday, unwell, too tired, refused...', condition: a => a.study && a.study.includes('No') },
+
     { id: 'magic_pot', type: 'emoji', text: '📖 Did Salai listen to MagicPot stories today?', emojis: ['😊 Yes!', '🙁 No'] },
+    { id: 'magic_pot_reason', type: 'reason', text: '🤔 Why no MagicPot today?', placeholder: 'Slept early, no time, wasn\'t in mood...', condition: a => a.magic_pot && a.magic_pot.includes('No') },
+
     { id: 'physical_play', type: 'emoji', text: '🏃 Did Salai have physical play/activity today?', emojis: ['⚽ Yes!', '📺 No'] },
+    { id: 'physical_play_reason', type: 'reason', text: '🤔 Why no physical play today?', placeholder: 'Raining, unwell, stayed indoors, too tired...', condition: a => a.physical_play && a.physical_play.includes('No') },
+
     { id: 'shouted', type: 'emoji', text: '🤫 Did Salai shout at mom or dad today?', emojis: ['😇 No!', '😬 Yes...'] },
+    { id: 'shouted_reason', type: 'reason', text: '🤔 What triggered Salai\'s shouting?', placeholder: 'Didn\'t get what she wanted, tired, hungry...', condition: a => a.shouted && a.shouted.includes('Yes') },
+
     { id: 'sleep_early', type: 'emoji', text: '🌙 Did Salai sleep on time?', emojis: ['😴 Yes!', '🌟 Stayed up'] },
+    { id: 'sleep_early_reason', type: 'reason', text: '🤔 Why did Salai stay up late?', placeholder: 'Was playing, watching something, couldn\'t sleep...', condition: a => a.sleep_early && a.sleep_early.includes('Stayed up') },
+
     { id: 'mood', type: 'emoji', text: '😊 How was Salai\'s mood today?', emojis: ['😄 Happy', '😐 Okay', '😢 Sad'] },
     { id: 'anything_else', type: 'text', text: '💬 Anything special to note about Salai today?' },
   ]
 };
 
-// ============================================================
-//  AVATARS - embed from uploaded files
-// ============================================================
+// ─── AVATARS ──────────────────────────────────────────────────────────────────
 const AVATAR_KEYS = { dad: 'sft_avatar_dad', mom: 'sft_avatar_mom', daughter: 'sft_avatar_daughter' };
-// Default placeholder SVGs
 const DEFAULT_AVATARS = {
   dad: `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23ffb3d1'/><text x='50' y='65' text-anchor='middle' font-size='45'>👨</text></svg>`,
   mom: `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23ffcce0'/><text x='50' y='65' text-anchor='middle' font-size='45'>👩</text></svg>`,
   daughter: `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23ffe0f0'/><text x='50' y='65' text-anchor='middle' font-size='45'>👧</text></svg>`
 };
 
-function getAvatar(profile) {
-  return localStorage.getItem(AVATAR_KEYS[profile]) || DEFAULT_AVATARS[profile];
-}
+function getAvatar(profile) { return localStorage.getItem(AVATAR_KEYS[profile]) || DEFAULT_AVATARS[profile]; }
 
 function updateAvatar(profile, input) {
   const file = input.files[0];
@@ -765,14 +739,13 @@ function updateAvatar(profile, input) {
   reader.readAsDataURL(file);
 }
 
-// ============================================================
-//  SCREEN MANAGEMENT
-// ============================================================
+// ─── SCREENS ──────────────────────────────────────────────────────────────────
 function showScreen(name) {
   ['home', 'form-screen', 'success-screen', 'insights-screen', 'config-screen'].forEach(id => {
     document.getElementById(id).classList.add('hidden');
   });
-  document.getElementById(name === 'insights' ? 'insights-screen' : name === 'config' ? 'config-screen' : name).classList.remove('hidden');
+  const map = { insights: 'insights-screen', config: 'config-screen', home: 'home', 'form-screen': 'form-screen', 'success-screen': 'success-screen' };
+  document.getElementById(map[name] || name).classList.remove('hidden');
   if (name === 'insights') renderInsights();
 }
 
@@ -782,59 +755,34 @@ function setActiveNav(activeId) {
   });
 }
 
-function goHome() {
-  showScreen('home');
-  setActiveNav('nav-home');
-  updateHomeUI();
-}
+function goHome() { showScreen('home'); setActiveNav('nav-home'); updateHomeUI(); }
 
-// ============================================================
-//  HOME UI
-// ============================================================
+// ─── HOME UI ──────────────────────────────────────────────────────────────────
 function updateHomeUI() {
   document.getElementById('home-date').textContent = formatDate(todayStr());
-
   ['dad','mom','daughter'].forEach(p => {
-    const avatar = document.getElementById(p + '-avatar');
-    avatar.src = getAvatar(p);
-
-    const todayEntry = state.responses[p];
-    const done = todayEntry && todayEntry.date === todayStr();
-    const statusEl = document.getElementById(p + '-status');
-    if (done) {
-      statusEl.textContent = '✅ Checked in!';
-      statusEl.className = 'profile-status done';
-    } else {
-      statusEl.textContent = '⭕ Not checked in';
-      statusEl.className = 'profile-status';
-    }
+    document.getElementById(p + '-avatar').src = getAvatar(p);
+    const done = state.responses[p] && state.responses[p].date === todayStr();
+    const el = document.getElementById(p + '-status');
+    el.textContent = done ? '✅ Checked in!' : '⭕ Not checked in';
+    el.className = 'profile-status' + (done ? ' done' : '');
   });
 
-  // Stats
   const allHistory = state.history || [];
-  const last7 = allHistory.filter(h => {
-    const d = new Date(h.date);
-    const now = new Date();
-    return (now - d) < 7 * 24 * 3600 * 1000;
-  });
+  const last7 = allHistory.filter(h => (new Date() - new Date(h.date)) < 7 * 24 * 3600 * 1000);
   document.getElementById('stat-checkins').textContent = last7.length;
 
-  // Streak: consecutive days with at least 1 check-in
   let streak = 0;
   for (let i = 0; i < 30; i++) {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
+    const d = new Date(); d.setDate(d.getDate() - i);
     const ds = d.toISOString().split('T')[0];
-    const hasEntry = allHistory.some(h => h.date === ds);
-    if (hasEntry) streak++;
+    if (allHistory.some(h => h.date === ds)) streak++;
     else if (i > 0) break;
   }
   document.getElementById('stat-streak').textContent = streak;
 
-  // Family score
   if (last7.length > 0) {
-    const scores = last7.map(h => computeScore(h));
-    const avg = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+    const avg = Math.round(last7.map(h => computeScore(h)).reduce((a,b)=>a+b,0) / last7.length);
     document.getElementById('stat-score').textContent = avg + '%';
   } else {
     document.getElementById('stat-score').textContent = '-';
@@ -842,10 +790,11 @@ function updateHomeUI() {
 }
 
 function computeScore(entry) {
-  // Simple scoring: count positive answers
   const a = entry.answers || {};
   let positive = 0, total = 0;
   Object.entries(a).forEach(([k, v]) => {
+    // Skip reason fields from scoring
+    if (k.endsWith('_reason')) return;
     if (v === 'yes' || (typeof v === 'string' && v.includes('Yes'))) { positive++; total++; }
     else if (v === 'no' || (typeof v === 'string' && v.includes('No'))) { total++; }
     else if (typeof v === 'number') { positive += v/5; total++; }
@@ -853,29 +802,22 @@ function computeScore(entry) {
   return total > 0 ? Math.round((positive/total)*100) : 50;
 }
 
-// ============================================================
-//  FORM
-// ============================================================
+// ─── FORM ─────────────────────────────────────────────────────────────────────
 let currentAnswers = {};
 let currentProfile = null;
 
 function openProfile(profile) {
   currentProfile = profile;
   currentAnswers = {};
-
   document.getElementById('form-name').textContent = {dad:'Karthik 👨', mom:'Raveena 🌺', daughter:'Salai ⭐'}[profile];
   document.getElementById('form-date-label').textContent = formatDate(todayStr());
   document.getElementById('form-avatar').src = getAvatar(profile);
-
   renderQuestions(profile);
   showScreen('form-screen');
 }
 
 function getVisibleQuestions(profile) {
-  return QUESTIONS[profile].filter(q => {
-    if (!q.condition) return true;
-    return q.condition(currentAnswers);
-  });
+  return QUESTIONS[profile].filter(q => !q.condition || q.condition(currentAnswers));
 }
 
 function renderQuestions(profile) {
@@ -885,44 +827,44 @@ function renderQuestions(profile) {
 
   qs.forEach((q, idx) => {
     const card = document.createElement('div');
-    card.className = 'question-card';
+    const isReason = q.type === 'reason';
+    card.className = 'question-card' + (isReason ? ' reason-card' : '');
     card.id = 'qcard_' + q.id;
 
     let inputHTML = '';
+
     if (q.type === 'yn') {
       const yv = currentAnswers[q.id];
       inputHTML = `<div class="yn-group">
-        <button class="yn-btn ${yv==='yes'?'selected-yes':''}" onclick="setAnswer('${q.id}','yes','yn'); rerenderQ('${profile}')">✅ Yes</button>
-        <button class="yn-btn ${yv==='no'?'selected-no':''}" onclick="setAnswer('${q.id}','no','yn'); rerenderQ('${profile}')">❌ No</button>
+        <button class="yn-btn ${yv==='yes'?'selected-yes':''}" onclick="setAnswer('${q.id}','yes','yn');rerenderQ('${profile}')">✅ Yes</button>
+        <button class="yn-btn ${yv==='no'?'selected-no':''}" onclick="setAnswer('${q.id}','no','yn');rerenderQ('${profile}')">❌ No</button>
       </div>`;
     } else if (q.type === 'scale') {
       inputHTML = `<div class="scale-group">
-        ${[1,2,3,4,5].map(n => `<button class="scale-btn ${currentAnswers[q.id]===n?'selected':''}" onclick="setAnswer('${q.id}',${n},'scale');rerenderQ('${profile}')">${n}</button>`).join('')}
+        ${[1,2,3,4,5].map(n=>`<button class="scale-btn ${currentAnswers[q.id]===n?'selected':''}" onclick="setAnswer('${q.id}',${n},'scale');rerenderQ('${profile}')">${n}</button>`).join('')}
       </div>
       <div class="scale-labels"><span>${q.scaleLabels?q.scaleLabels[0]:'Low'}</span><span>${q.scaleLabels?q.scaleLabels[1]:'High'}</span></div>`;
     } else if (q.type === 'text') {
       inputHTML = `<textarea class="q-textarea" placeholder="Type here..." onchange="setAnswer('${q.id}',this.value,'text')" oninput="setAnswer('${q.id}',this.value,'text')">${currentAnswers[q.id]||''}</textarea>`;
+    } else if (q.type === 'reason') {
+      inputHTML = `<textarea class="q-textarea" placeholder="${q.placeholder || 'Tell us more...'}" onchange="setAnswer('${q.id}',this.value,'text')" oninput="setAnswer('${q.id}',this.value,'text')" style="min-height:64px;">${currentAnswers[q.id]||''}</textarea>`;
     } else if (q.type === 'number') {
       inputHTML = `<input type="number" class="q-number-input" placeholder="Enter number..." min="0" value="${currentAnswers[q.id]||''}" onchange="setAnswer('${q.id}',this.value,'number')" oninput="setAnswer('${q.id}',this.value,'number')">`;
     } else if (q.type === 'emoji') {
       inputHTML = `<div class="emoji-choice-group">
-        ${(q.emojis||[]).map((e,i) => `<button class="emoji-choice-btn ${currentAnswers[q.id]===e?'selected':''}" onclick="setAnswer('${q.id}','${e}','emoji');rerenderQ('${profile}')">${e}</button>`).join('')}
+        ${(q.emojis||[]).map(e=>`<button class="emoji-choice-btn ${currentAnswers[q.id]===e?'selected':''}" onclick="setAnswer('${q.id}','${e}','emoji');rerenderQ('${profile}')">${e}</button>`).join('')}
       </div>`;
     }
 
-    card.innerHTML = `
-      <div class="q-number">Question ${idx+1} of ${qs.length}</div>
-      <div class="q-text">${q.text}</div>
-      ${inputHTML}
-    `;
+    const qLabel = isReason
+      ? `<div class="q-reason-label">💬 Tell us more</div>`
+      : `<div class="q-number">Question ${idx+1} of ${qs.length}</div>`;
+
+    card.innerHTML = `${qLabel}<div class="q-text">${q.text}</div>${inputHTML}`;
     container.appendChild(card);
   });
 
-  // Grocery section for mom
-  if (profile === 'mom') {
-    container.appendChild(buildGrocerySection());
-  }
-
+  if (profile === 'mom') container.appendChild(buildGrocerySection());
   updateProgress(profile);
 }
 
@@ -935,7 +877,7 @@ function setAnswer(qId, val, type) {
 }
 
 function updateProgress(profile) {
-  const qs = getVisibleQuestions(profile);
+  const qs = getVisibleQuestions(profile).filter(q => q.type !== 'reason'); // don't count reason as required
   const answered = qs.filter(q => currentAnswers[q.id] !== undefined && currentAnswers[q.id] !== '').length;
   const pct = Math.round((answered / qs.length) * 100);
   document.getElementById('progress-fill').style.width = pct + '%';
@@ -943,9 +885,7 @@ function updateProgress(profile) {
   document.getElementById('progress-label-text').textContent = `${answered} of ${qs.length} answered`;
 }
 
-// ============================================================
-//  GROCERY
-// ============================================================
+// ─── GROCERY ──────────────────────────────────────────────────────────────────
 function buildGrocerySection() {
   const div = document.createElement('div');
   div.className = 'grocery-section';
@@ -991,24 +931,15 @@ function addGroceryItem() {
   const rate = rateEl ? rateEl.value : '';
   if (!name) { showToast('⚠️ Please enter item name'); return; }
   state.groceryItems = state.groceryItems || [];
-  state.groceryItems.push({
-    name, rate: rate || '',
-    purchasedDate: todayStr(),
-    todayStatus: 'using',
-    finishedDates: []
-  });
+  state.groceryItems.push({ name, rate: rate || '', purchasedDate: todayStr(), todayStatus: 'using', finishedDates: [] });
   saveState();
   renderQuestions('mom');
   showToast('✅ Item added!');
 }
 
-// ============================================================
-//  SUBMIT
-// ============================================================
+// ─── SUBMIT ───────────────────────────────────────────────────────────────────
 async function submitForm() {
   const profile = currentProfile;
-
-  // Save response
   const entry = {
     profile,
     date: todayStr(),
@@ -1022,46 +953,34 @@ async function submitForm() {
   state.history.push(entry);
   saveState();
 
-  // Send to Google Apps Script
   const btn = document.getElementById('submit-btn');
   btn.disabled = true;
-  btn.textContent = '⏳ Saving to Google Sheet...';
+  btn.textContent = '⏳ Saving...';
 
   try {
     await fetch(GAS_URL_HARDCODED, {
-      method: 'POST',
-      mode: 'no-cors',
+      method: 'POST', mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(entry)
     });
-    // no-cors returns opaque response — if no exception, data was sent
   } catch(e) {
-    console.error('GAS fetch error:', e);
     showToast('⚠️ Network error — data saved locally only');
   }
 
   btn.disabled = false;
   btn.textContent = '✨ Submit My Check-in';
 
-  // Show success
   const names = {dad:'Karthik', mom:'Raveena', daughter:'Salai'};
   document.getElementById('success-msg').textContent = `${names[profile]}'s check-in for ${formatDate(todayStr())} has been saved! 🌸`;
   showScreen('success-screen');
-
-  // Check if 7 days = send insights
   checkWeeklyInsights();
 }
 
-// ============================================================
-//  INSIGHTS
-// ============================================================
+// ─── INSIGHTS ─────────────────────────────────────────────────────────────────
 function renderInsights() {
   const content = document.getElementById('insights-content');
   const history = state.history || [];
-  const last7 = history.filter(h => {
-    const d = new Date(h.date);
-    return (new Date() - d) < 7 * 24 * 3600 * 1000;
-  });
+  const last7 = history.filter(h => (new Date() - new Date(h.date)) < 7 * 24 * 3600 * 1000);
 
   if (last7.length === 0) {
     content.innerHTML = `<div class="insight-card" style="text-align:center;padding:40px;">
@@ -1077,40 +996,17 @@ function renderInsights() {
 
   profiles.forEach(p => {
     const pHistory = last7.filter(h => h.profile === p);
-    if (pHistory.length === 0) return;
+    if (!pHistory.length) return;
 
     const score = Math.round(pHistory.map(h=>computeScore(h)).reduce((a,b)=>a+b,0)/pHistory.length);
+    const scoreColor = score >= 70 ? '#16a34a' : score >= 40 ? '#f59e0b' : '#ef4444';
 
-    // Specific metrics
-    const metrics = [];
-    if (p === 'dad') {
-      metrics.push({ label: 'Exercise', val: pct(pHistory, 'exercise', 'yes') });
-      metrics.push({ label: 'Book Reading', val: pct(pHistory, 'book', 'yes') });
-      metrics.push({ label: 'Moolamanthiram', val: pct(pHistory, 'moolamanthiram', 'yes') });
-      metrics.push({ label: 'Side Hustle', val: pct(pHistory, 'side_hustle', 'yes') });
-      metrics.push({ label: 'No Arguments', val: pct(pHistory, 'argument', 'no') });
-    } else if (p === 'mom') {
-      metrics.push({ label: 'Exercise', val: pct(pHistory, 'exercise', 'yes') });
-      metrics.push({ label: 'Moolamanthiram', val: pct(pHistory, 'moolamanthiram', 'yes') });
-      metrics.push({ label: 'MagicPot Stories', val: pct(pHistory, 'salai_story', 'yes') });
-      metrics.push({ label: 'Study w/ Salai', val: pct(pHistory, 'salai_study', 'yes') });
-      metrics.push({ label: 'Slept Early', val: pct(pHistory, 'sleep_early', 'yes') });
-      metrics.push({ label: 'No Arguments', val: pct(pHistory, 'argument', 'no') });
-    } else {
-      metrics.push({ label: 'Woke Early', val: pctEmoji(pHistory, 'woke_early', 'Yes') });
-      metrics.push({ label: 'School Ontime', val: pctEmoji(pHistory, 'school_ontime', 'Yes') });
-      metrics.push({ label: 'Drank Water', val: pctEmoji(pHistory, 'water_school', 'Yes') });
-      metrics.push({ label: 'Studied', val: pctEmoji(pHistory, 'study', 'Yes') });
-      metrics.push({ label: 'MagicPot', val: pctEmoji(pHistory, 'magic_pot', 'Yes') });
-      metrics.push({ label: 'Physical Play', val: pctEmoji(pHistory, 'physical_play', 'Yes') });
-      metrics.push({ label: 'Slept Early', val: pctEmoji(pHistory, 'sleep_early', 'Yes') });
-    }
-
-    // Mood average
+    const metrics = getMetrics(p, pHistory);
     const moods = pHistory.map(h => h.answers && h.answers.mood).filter(v => typeof v === 'number');
     const avgMood = moods.length ? (moods.reduce((a,b)=>a+b,0)/moods.length).toFixed(1) : null;
 
-    const scoreColor = score >= 70 ? '#16a34a' : score >= 40 ? '#f59e0b' : '#ef4444';
+    // Collect all reason answers for this profile
+    const reasonsHtml = buildReasonsSection(p, pHistory);
 
     html += `<div class="insight-card">
       <h3>${pNames[p]} — Week Score: <span style="color:${scoreColor}">${score}%</span> ${score>=70?'🌟':score>=40?'📈':'💪'}</h3>
@@ -1123,27 +1019,87 @@ function renderInsights() {
         </div>
       `).join('')}
       ${generateInsightText(p, pHistory)}
+      ${reasonsHtml}
     </div>`;
   });
 
-  // Grocery insights
-  if (state.groceryItems && state.groceryItems.length > 0) {
-    html += buildGroceryInsightCard();
-  }
-
+  if (state.groceryItems && state.groceryItems.length > 0) html += buildGroceryInsightCard();
   content.innerHTML = html;
+}
+
+// Collects all reason fields and renders them grouped by topic
+function buildReasonsSection(profile, pHistory) {
+  const reasonQuestions = QUESTIONS[profile].filter(q => q.type === 'reason');
+  if (!reasonQuestions.length) return '';
+
+  const entries = [];
+  reasonQuestions.forEach(q => {
+    pHistory.forEach(h => {
+      const val = h.answers && h.answers[q.id];
+      if (val && val.trim()) {
+        // Get parent question label
+        const parentId = q.id.replace('_reason', '');
+        const parentQ = QUESTIONS[profile].find(x => x.id === parentId);
+        const topic = parentQ ? parentQ.text.replace(/^[^\s]+\s/, '') : q.id; // strip emoji
+        entries.push({ date: h.date, topic, reason: val.trim() });
+      }
+    });
+  });
+
+  if (!entries.length) return '';
+
+  const rows = entries.map(e =>
+    `<div class="reason-entry">
+      <span style="font-size:0.75rem;color:var(--text-light);font-weight:700;">${e.date}</span>
+      <strong style="color:var(--text-dark);"> · ${e.topic.slice(0,40)}</strong><br>
+      <span style="color:var(--text-mid);">↳ ${e.reason}</span>
+    </div>`
+  ).join('');
+
+  return `<div class="reasons-block">
+    <h4>🗒️ Reasons & Context (${entries.length} note${entries.length !== 1 ? 's' : ''} this week)</h4>
+    ${rows}
+  </div>`;
+}
+
+function getMetrics(p, pHistory) {
+  if (p === 'dad') return [
+    { label: 'Exercise', val: pct(pHistory, 'exercise', 'yes') },
+    { label: 'Book Reading', val: pct(pHistory, 'book', 'yes') },
+    { label: 'Moolamanthiram', val: pct(pHistory, 'moolamanthiram', 'yes') },
+    { label: 'Side Hustle', val: pct(pHistory, 'side_hustle', 'yes') },
+    { label: 'Time w/ Salai', val: pct(pHistory, 'time_with_salai', 'yes') },
+    { label: 'No Arguments', val: pct(pHistory, 'argument', 'no') },
+  ];
+  if (p === 'mom') return [
+    { label: 'Exercise', val: pct(pHistory, 'exercise', 'yes') },
+    { label: 'Moolamanthiram', val: pct(pHistory, 'moolamanthiram', 'yes') },
+    { label: 'MagicPot Stories', val: pct(pHistory, 'salai_story', 'yes') },
+    { label: 'Study w/ Salai', val: pct(pHistory, 'salai_study', 'yes') },
+    { label: 'Got Rest', val: pct(pHistory, 'rest', 'yes') },
+    { label: 'Slept Early', val: pct(pHistory, 'sleep_early', 'yes') },
+    { label: 'Me-Time', val: pct(pHistory, 'me_time', 'yes') },
+    { label: 'No Arguments', val: pct(pHistory, 'argument', 'no') },
+  ];
+  return [
+    { label: 'Woke Early', val: pctEmoji(pHistory, 'woke_early', 'Yes') },
+    { label: 'School Ontime', val: pctEmoji(pHistory, 'school_ontime', 'Yes') },
+    { label: 'Drank Water', val: pctEmoji(pHistory, 'water_school', 'Yes') },
+    { label: 'Studied', val: pctEmoji(pHistory, 'study', 'Yes') },
+    { label: 'MagicPot', val: pctEmoji(pHistory, 'magic_pot', 'Yes') },
+    { label: 'Physical Play', val: pctEmoji(pHistory, 'physical_play', 'Yes') },
+    { label: 'Slept Early', val: pctEmoji(pHistory, 'sleep_early', 'Yes') },
+  ];
 }
 
 function pct(arr, key, val) {
   if (!arr.length) return 0;
   return Math.round((arr.filter(h => h.answers && h.answers[key] === val).length / arr.length) * 100);
 }
-
 function pctEmoji(arr, key, partial) {
   if (!arr.length) return 0;
   return Math.round((arr.filter(h => h.answers && typeof h.answers[key] === 'string' && h.answers[key].includes(partial)).length / arr.length) * 100);
 }
-
 function getMoodEmoji(v) {
   if (v >= 4.5) return '😄 Excellent!';
   if (v >= 3.5) return '😊 Good';
@@ -1158,16 +1114,19 @@ function generateInsightText(profile, pHistory) {
     if (pct(pHistory,'moolamanthiram','yes') < 70) tips.push('🙏 Try setting a morning alarm for Moolamanthiram.');
     if (pct(pHistory,'side_hustle','yes') < 50) tips.push('🚀 Block a dedicated 45-min slot daily for side hustle work.');
     if (pct(pHistory,'book','yes') < 50) tips.push('📚 Keep your book on the breakfast table — read while eating!');
+    if (pct(pHistory,'time_with_salai','yes') < 60) tips.push('👧 Salai needs daddy time! Even 20 mins of play makes a big difference.');
     if (pct(pHistory,'argument','yes') > 30) tips.push('🤝 Multiple argument days noted. Consider a weekly "no-conflict" pact with Raveena.');
   } else if (profile === 'mom') {
     if (pct(pHistory,'salai_story','yes') < 70) tips.push('📖 Salai loves MagicPot! Try to read at least 1 story every evening.');
     if (pct(pHistory,'sleep_early','yes') < 50) tips.push('🌙 You deserve rest! Aim for lights out by 10:00 PM.');
     if (pct(pHistory,'exercise','yes') < 50) tips.push('💪 A 20-min morning walk can transform your energy all day!');
     if (pct(pHistory,'rest','yes') < 50) tips.push('😴 Please take short naps when Salai naps — self-care matters!');
+    if (pct(pHistory,'me_time','yes') < 50) tips.push('🌺 You give so much — make sure to carve out even 15 mins just for you.');
   } else {
     if (pctEmoji(pHistory,'school_ontime','Yes') < 60) tips.push('⏰ Let\'s prepare school bag the night before to leave on time!');
     if (pctEmoji(pHistory,'water_school','Yes') < 70) tips.push('💧 Put a fun sticker on Salai\'s water bottle to remind her!');
     if (pctEmoji(pHistory,'physical_play','Yes') < 70) tips.push('🏃 30 min outdoor play daily is great for growing up strong!');
+    if (pctEmoji(pHistory,'shouted','Yes') > 30) tips.push('🤫 Salai has been shouting more than usual. Check the reasons and see if there\'s a pattern.');
   }
   if (!tips.length) tips.push('🌟 Amazing consistency this week! Keep it up!');
   return `<div style="margin-top:12px;padding:12px;background:var(--pink-50);border-radius:12px;border:1.5px solid var(--pink-200);">
@@ -1193,7 +1152,6 @@ function buildGroceryInsightCard() {
       </div>
     </div>`;
   }).join('');
-
   return `<div class="insight-card">
     <h3>🛒 Grocery Usage Tracker</h3>
     <p style="font-size:0.8rem;color:var(--text-light);font-weight:600;margin-bottom:10px;">Track how long each item lasts in your household.</p>
@@ -1201,9 +1159,7 @@ function buildGroceryInsightCard() {
   </div>`;
 }
 
-// ============================================================
-//  WEEKLY INSIGHTS EMAIL
-// ============================================================
+// ─── WEEKLY EMAIL ─────────────────────────────────────────────────────────────
 function checkWeeklyInsights() {
   const lastSent = state.lastInsightsSent ? new Date(state.lastInsightsSent) : null;
   const now = new Date();
@@ -1218,54 +1174,38 @@ function checkWeeklyInsights() {
 }
 
 async function sendInsightsEmail() {
-  const history = state.history || [];
-  const last7 = history.filter(h => (new Date()-new Date(h.date)) < 7*24*3600*1000);
-
   const payload = {
     type: 'weekly_insights',
     email: EMAIL_HARDCODED,
-    data: last7,
+    data: (state.history||[]).filter(h=>(new Date()-new Date(h.date))<7*24*3600*1000),
     groceryItems: state.groceryItems,
     generatedAt: new Date().toISOString()
   };
-
   try {
-    await fetch(GAS_URL_HARDCODED, {
-      method: 'POST', mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
+    await fetch(GAS_URL_HARDCODED, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
     showToast('📧 Insights sent to email!');
   } catch(e) {
-    showToast('❌ Failed to send. Check your internet connection.');
+    showToast('❌ Failed to send.');
   }
 }
 
-// ============================================================
-//  SETUP / CONFIG
-// ============================================================
-const GAS_SCRIPT = `// Google Apps Script - Salai Family Tracker
-// Deploy as Web App → Anyone can access
-
-const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE';
+// ─── SETUP ────────────────────────────────────────────────────────────────────
+const GAS_SCRIPT = `const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE';
 const EMAIL = 'salaikarthikeyanganesan@gmail.com';
 
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
     const ss = SpreadsheetApp.openById(SHEET_ID);
-    
     if (data.type === 'weekly_insights') {
       sendWeeklyReport(data);
     } else {
       saveCheckin(ss, data);
       sendNotificationEmail(data);
     }
-    return ContentService.createTextOutput(JSON.stringify({status:'ok'}))
-      .setMimeType(ContentService.MimeType.JSON);
+    return ContentService.createTextOutput(JSON.stringify({status:'ok'})).setMimeType(ContentService.MimeType.JSON);
   } catch(err) {
-    return ContentService.createTextOutput(JSON.stringify({error:err.toString()}))
-      .setMimeType(ContentService.MimeType.JSON);
+    return ContentService.createTextOutput(JSON.stringify({error:err.toString()})).setMimeType(ContentService.MimeType.JSON);
   }
 }
 
@@ -1273,64 +1213,49 @@ function saveCheckin(ss, data) {
   const sheetName = data.profile.charAt(0).toUpperCase() + data.profile.slice(1);
   let sheet = ss.getSheetByName(sheetName);
   if (!sheet) sheet = ss.insertSheet(sheetName);
-  
-  if (sheet.getLastRow() === 0) {
-    const headers = ['Timestamp','Date','Profile'].concat(Object.keys(data.answers));
-    sheet.appendRow(headers);
-  }
-  const row = [data.timestamp, data.date, data.profile].concat(Object.values(data.answers));
-  sheet.appendRow(row);
+  if (sheet.getLastRow() === 0) sheet.appendRow(['Timestamp','Date','Profile'].concat(Object.keys(data.answers)));
+  sheet.appendRow([data.timestamp, data.date, data.profile].concat(Object.values(data.answers)));
 }
 
 function sendNotificationEmail(data) {
   const names = {dad:'Karthik (Dad)', mom:'Raveena (Mom)', daughter:'Salai (Daughter)'};
   const name = names[data.profile] || data.profile;
-  const subject = '✅ ' + name + ' checked in - Salai Family Tracker';
-  const body = name + ' has submitted their daily check-in for ' + data.date + '.\\n\\nAnswers:\\n' 
-    + Object.entries(data.answers).map(([k,v]) => k + ': ' + v).join('\\n')
+  const answers = data.answers || {};
+  const reasonLines = Object.entries(answers).filter(([k])=>k.endsWith('_reason') && answers[k]).map(([k,v])=>'  • ' + k.replace('_reason','') + ': ' + v).join('\\n');
+  const subject = '✅ ' + name + ' checked in — Salai Family Tracker';
+  const body = name + ' submitted their daily check-in for ' + data.date + '.\\n\\nAnswers:\\n'
+    + Object.entries(answers).filter(([k])=>!k.endsWith('_reason')).map(([k,v])=>k+': '+v).join('\\n')
+    + (reasonLines ? '\\n\\n🗒️ Reasons for NO answers:\\n' + reasonLines : '')
     + '\\n\\n🌸 Salai Family Tracker';
   GmailApp.sendEmail(EMAIL, subject, body);
 }
 
 function sendWeeklyReport(data) {
-  const subject = '📊 Weekly Family Insights - Salai Family Tracker';
-  const entryCount = data.data ? data.data.length : 0;
-  const body = 'Your weekly Salai Family Tracker report is ready!\\n\\n'
-    + 'Total check-ins this week: ' + entryCount + '\\n'
-    + 'Open the app to view detailed insights and charts.\\n'
-    + '\\nGenerated: ' + data.generatedAt
-    + '\\n\\n🌸 Salai Family Tracker';
+  const subject = '📊 Weekly Family Insights — Salai Family Tracker';
+  const body = 'Your weekly report is ready!\\nTotal check-ins: ' + (data.data?data.data.length:0) + '\\nGenerated: ' + data.generatedAt + '\\n\\n🌸 Salai Family Tracker';
   GmailApp.sendEmail(EMAIL, subject, body);
 }`;
 
 function initSetup() {
   document.getElementById('gas-code-block').textContent = GAS_SCRIPT;
-  const savedUrl = state.gasUrl || localStorage.getItem('sft_gas_url') || '';
-  document.getElementById('gas-url-input').value = savedUrl;
-  document.getElementById('email-input').value = state.email || 'salaikarthikeyanganesan@gmail.com';
+  document.getElementById('gas-url-input').value = state.gasUrl || '';
+  document.getElementById('email-input').value = state.email || EMAIL_HARDCODED;
 }
 
 function copyGASCode() {
-  navigator.clipboard.writeText(GAS_SCRIPT).then(() => showToast('📋 Script copied!')).catch(() => {
-    showToast('⚠️ Please manually copy the code');
-  });
+  navigator.clipboard.writeText(GAS_SCRIPT).then(() => showToast('📋 Script copied!')).catch(() => showToast('⚠️ Please manually copy'));
 }
 
 function saveConfig() {
   const url = document.getElementById('gas-url-input').value.trim();
   const email = document.getElementById('email-input').value.trim();
-  if (url) {
-    state.gasUrl = url;
-    localStorage.setItem('sft_gas_url', url);
-  }
+  if (url) { state.gasUrl = url; localStorage.setItem('sft_gas_url', url); }
   if (email) state.email = email;
   saveState();
   showToast('✅ Configuration saved!');
 }
 
-// ============================================================
-//  TOAST
-// ============================================================
+// ─── TOAST ────────────────────────────────────────────────────────────────────
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -1338,25 +1263,16 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2800);
 }
 
-// ============================================================
-//  INIT
-// ============================================================
+// ─── INIT ─────────────────────────────────────────────────────────────────────
 function init() {
   loadState();
   updateHomeUI();
   initSetup();
-
-  // Set today date
   document.getElementById('home-date').textContent = formatDate(todayStr());
-
-  // Reset todayStatus on grocery items each day
   const today = todayStr();
   if (state.groceryItems) {
     state.groceryItems.forEach(item => {
-      if (item.lastStatusDate !== today) {
-        item.todayStatus = 'using';
-        item.lastStatusDate = today;
-      }
+      if (item.lastStatusDate !== today) { item.todayStatus = 'using'; item.lastStatusDate = today; }
     });
     saveState();
   }
