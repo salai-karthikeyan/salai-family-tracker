@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karthik's Mind Log</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f2ed;
+    --surface: #ffffff;
+    --surface2: #f0ece5;
+    --border: #e0d9cf;
+    --border2: #c8bfb2;
+    --accent: #1a3a2a;
+    --accent2: #c4622d;
+    --accent3: #2d6a4f;
+    --muted: #9e9285;
+    --text: #1c1814;
+    --text-dim: #6b6058;
+    --high: #c4622d;
+    --med: #b5860d;
+    --low: #2d6a4f;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    --shadow-hover: 0 2px 8px rgba(0,0,0,0.1), 0 8px 24px rgba(0,0,0,0.07);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8bfb2' fill-opacity='0.25'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .app {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 36px 24px 120px;
+  }
+
+  /* Header */
+  header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .logo-block {}
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: -0.5px;
+  }
+
+  .logo-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-top: 5px;
+  }
+
+  .stats {
+    display: flex;
+    gap: 20px;
+  }
+
+  .stat-box {
+    text-align: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 18px;
+    box-shadow: var(--shadow);
+    min-width: 64px;
+  }
+
+  .stat-box strong {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+  }
+
+  .stat-box span {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-top: 3px;
+    display: block;
+  }
+
+  /* Google Sheets Banner */
+  .sheets-banner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent3);
+    border-radius: 6px;
+    padding: 12px 18px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .sheets-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .sheets-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #ccc;
+    transition: background 0.3s;
+  }
+
+  .sheets-dot.connected { background: var(--low); }
+  .sheets-dot.syncing { background: var(--med); animation: pulse-dot 0.8s infinite; }
+  .sheets-dot.error { background: var(--high); }
+
+  @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .sheets-setup-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: opacity 0.2s;
+  }
+
+  .sheets-setup-btn:hover { opacity: 0.85; }
+
+  /* Capture Zone */
+  .capture-zone {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .capture-zone:focus-within {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .capture-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--accent2);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  #taskInput {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    resize: none;
+    line-height: 1.35;
+    min-height: 40px;
+  }
+
+  #taskInput::placeholder { color: var(--border2); font-weight: 700; }
+
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+  .capture-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .capture-meta input,
+  .capture-meta select,
+  .meta-full {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 9px 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    width: 100%;
+  }
+
+  .capture-meta input:focus,
+  .capture-meta select:focus,
+  .meta-full:focus {
+    border-color: var(--accent);
+    background: white;
+  }
+
+  .meta-full {
+    grid-column: 1 / -1;
+    resize: vertical;
+    min-height: 64px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+  }
+
+  .capture-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* Voice button - redesigned */
+  .voice-controls { display: flex; align-items: center; gap: 10px; }
+
+  .voice-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface2);
+    border: 1.5px solid var(--border2);
+    border-radius: 4px;
+    padding: 9px 16px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    user-select: none;
+  }
+
+  .voice-btn:hover { border-color: var(--accent2); color: var(--accent2); background: #fff5f0; }
+
+  .voice-btn.recording {
+    background: #fff0e8;
+    border-color: var(--accent2);
+    color: var(--accent2);
+    box-shadow: 0 0 0 3px rgba(196,98,45,0.12);
+  }
+
+  .voice-stop-btn {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    background: #fff0e8;
+    border: 1.5px solid var(--accent2);
+    border-radius: 4px;
+    padding: 9px 16px;
+    color: var(--accent2);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .voice-stop-btn.visible { display: flex; }
+  .voice-stop-btn:hover { background: var(--accent2); color: white; }
+
+  .voice-wave {
+    display: none;
+    align-items: center;
+    gap: 2px;
+    height: 16px;
+  }
+
+  .voice-wave.visible { display: flex; }
+
+  .voice-wave span {
+    display: block;
+    width: 3px;
+    border-radius: 2px;
+    background: var(--accent2);
+    animation: wave 0.8s infinite ease-in-out;
+  }
+
+  .voice-wave span:nth-child(1) { height: 6px; animation-delay: 0s; }
+  .voice-wave span:nth-child(2) { height: 12px; animation-delay: 0.1s; }
+  .voice-wave span:nth-child(3) { height: 16px; animation-delay: 0.2s; }
+  .voice-wave span:nth-child(4) { height: 10px; animation-delay: 0.3s; }
+  .voice-wave span:nth-child(5) { height: 7px; animation-delay: 0.4s; }
+
+  @keyframes wave {
+    0%,100% { transform: scaleY(0.5); opacity: 0.6; }
+    50% { transform: scaleY(1); opacity: 1; }
+  }
+
+  .add-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 11px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: opacity 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .add-btn:hover { opacity: 0.88; }
+  .add-btn:active { transform: scale(0.98); }
+
+  /* Filters */
+  .filters {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.15s;
+    box-shadow: var(--shadow);
+  }
+
+  .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .filter-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+
+  /* Section */
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* Task cards */
+  .task-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .task-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    animation: slideIn 0.22s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .task-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: 8px 0 0 8px;
+  }
+
+  .task-card.priority-high::before { background: var(--high); }
+  .task-card.priority-medium::before { background: var(--med); }
+  .task-card.priority-low::before { background: var(--low); }
+
+  .task-card:hover:not(.done) { box-shadow: var(--shadow-hover); border-color: var(--border2); }
+  .task-card.done { opacity: 0.5; }
+  .task-card.done .task-title { text-decoration: line-through; color: var(--muted); }
+
+  .task-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .task-check {
+    width: 20px; height: 20px;
+    border: 2px solid var(--border2);
+    border-radius: 50%;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+    background: white;
+  }
+
+  .task-check:hover { border-color: var(--accent3); }
+  .task-check.checked { background: var(--accent3); border-color: var(--accent3); }
+  .task-check.checked::after { content: '✓'; font-size: 11px; color: white; font-weight: 700; }
+
+  .task-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    flex: 1;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .task-actions {
+    display: flex;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+  }
+
+  .task-card:hover .task-actions { opacity: 1; }
+
+  .icon-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 4px 10px;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .icon-btn:hover { border-color: var(--accent); color: var(--accent); background: white; }
+  .icon-btn.del:hover { border-color: var(--high); color: var(--high); background: #fff5f0; }
+
+  .task-body { margin-left: 32px; }
+
+  .task-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .task-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+
+  .tag.priority-high { background: #fef0e8; color: var(--high); border: 1px solid #fad5be; }
+  .tag.priority-medium { background: #fdf8e8; color: var(--med); border: 1px solid #f5e5a0; }
+  .tag.priority-low { background: #e8f5ef; color: var(--low); border: 1px solid #b8dfc9; }
+
+  .task-reminder {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  .task-reminder.overdue { color: var(--high); font-weight: 500; }
+
+  .task-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent3);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--accent3);
+    transition: border-style 0.15s;
+    display: flex; align-items: center; gap: 4px;
+    max-width: 260px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .task-link:hover { border-style: solid; }
+
+  .sync-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 1px 8px;
+    border-radius: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .sync-badge.synced { background: #e8f5ef; color: var(--low); }
+  .sync-badge.pending { background: #fdf8e8; color: var(--med); }
+  .sync-badge.failed { background: #fef0e8; color: var(--high); }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(28,24,20,0.5);
+    backdrop-filter: blur(6px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 30px;
+    width: 100%;
+    max-width: 560px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    animation: modalIn 0.2s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.97) translateY(8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--accent);
+  }
+
+  .modal label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 6px;
+    margin-top: 16px;
+  }
+
+  .modal input, .modal select, .modal textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .modal input:focus, .modal select:focus, .modal textarea:focus {
+    border-color: var(--accent);
+    background: white;
+  }
+
+  .modal textarea { resize: vertical; min-height: 80px; }
+
+  .modal-btns {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 22px;
+  }
+
+  .btn-cancel {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 9px 22px;
+    color: var(--text-dim);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  .btn-cancel:hover { border-color: var(--muted); }
+
+  .btn-save {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 9px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .btn-save:hover { opacity: 0.85; }
+
+  /* Setup modal */
+  .setup-info {
+    background: var(--surface2);
+    border-radius: 6px;
+    padding: 14px;
+    margin-top: 12px;
+  }
+
+  .setup-info p {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .setup-info code {
+    background: var(--accent);
+    color: white;
+    padding: 1px 6px;
+    border-radius: 2px;
+    font-size: 11px;
+  }
+
+  .setup-steps {
+    margin-top: 10px;
+    padding-left: 16px;
+  }
+
+  .setup-steps li {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+    line-height: 1.6;
+  }
+
+  /* Toast */
+  .toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 200;
+  }
+
+  .toast {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 12px 16px;
+    min-width: 260px;
+    box-shadow: var(--shadow-hover);
+    animation: toastIn 0.25s ease;
+  }
+
+  .toast.warn { border-left-color: var(--high); }
+  .toast.ok { border-left-color: var(--low); }
+
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateX(16px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .toast-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .toast-body { font-size: 12px; color: var(--text-dim); font-family: 'DM Mono', monospace; }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+
+  .empty-state .big {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    color: var(--border2);
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+
+  .empty-state p {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 600px) {
+    .capture-meta { grid-template-columns: 1fr 1fr; }
+    header { flex-direction: column; gap: 16px; }
+    .stats { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- Header -->
+  <header>
+    <div class="logo-block">
+      <div class="logo">Karthik's Mind Log</div>
+      <div class="logo-sub">Capture · Act · Close</div>
+    </div>
+    <div class="stats">
+      <div class="stat-box"><strong id="statOpen">0</strong><span>Open</span></div>
+      <div class="stat-box"><strong id="statToday">0</strong><span>Today</span></div>
+      <div class="stat-box"><strong id="statDone">0</strong><span>Closed</span></div>
+    </div>
+  </header>
+
+  <!-- Google Sheets Status -->
+  <div class="sheets-banner">
+    <div class="sheets-status">
+      <div class="sheets-dot" id="sheetsDot"></div>
+      <span id="sheetsStatusText" style="font-size:12px;">Google Sheets sync — setup required</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <a id="sheetsLink" href="https://docs.google.com/spreadsheets/d/1Z1_zGbLcDL3ZMJStlKmpNldVNkTiqQBzV3KvgkKiMSI/edit" target="_blank"
+         style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent3);text-decoration:none;border-bottom:1px dashed var(--accent3);">
+        ↗ Open Sheet
+      </a>
+      <button class="sheets-setup-btn" onclick="openSetup()">Setup Webhook</button>
+    </div>
+  </div>
+
+  <!-- Capture Zone -->
+  <div class="capture-zone">
+    <span class="capture-label">⚡ New Thought</span>
+    <textarea id="taskInput" rows="2" placeholder="Speak or type your task, idea, or plan..."></textarea>
+    <div class="divider"></div>
+    <div class="capture-meta">
+      <select id="priorityInput">
+        <option value="high">🔴 High Priority</option>
+        <option value="medium" selected>🟡 Medium Priority</option>
+        <option value="low">🟢 Low Priority</option>
+      </select>
+      <input type="datetime-local" id="reminderInput">
+      <input type="url" id="linkInput" placeholder="https:// — reference link">
+      <textarea class="meta-full" id="descInput" placeholder="Description, context, notes..."></textarea>
+    </div>
+    <div class="capture-bottom">
+      <div class="voice-controls">
+        <button class="voice-btn" id="voiceBtn" onclick="startVoice()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+          <span id="voiceBtnLabel">Voice Input</span>
+        </button>
+        <div class="voice-wave" id="voiceWave">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <button class="voice-stop-btn" id="voiceStopBtn" onclick="stopVoice()">
+          ⏹ Stop
+        </button>
+      </div>
+      <button class="add-btn" onclick="addTask()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Log It
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setFilter('open',this)">Open</button>
+    <button class="filter-btn" onclick="setFilter('high',this)">🔴 High</button>
+    <button class="filter-btn" onclick="setFilter('medium',this)">🟡 Medium</button>
+    <button class="filter-btn" onclick="setFilter('low',this)">🟢 Low</button>
+    <button class="filter-btn" onclick="setFilter('today',this)">Due Today</button>
+    <button class="filter-btn" onclick="setFilter('done',this)">Closed</button>
+  </div>
+
+  <div class="section-label" id="listLabel">All Tasks</div>
+  <div class="task-list" id="taskList"></div>
+  <div class="empty-state" id="emptyState" style="display:none">
+    <div class="big">Nothing yet.</div>
+    <p>Start capturing your next thought.</p>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <div class="modal-title">Edit Task</div>
+    <label>Task Title</label>
+    <input type="text" id="editTitle">
+    <label>Description</label>
+    <textarea id="editDesc"></textarea>
+    <label>Priority</label>
+    <select id="editPriority">
+      <option value="high">🔴 High Priority</option>
+      <option value="medium">🟡 Medium Priority</option>
+      <option value="low">🟢 Low Priority</option>
+    </select>
+    <label>Reminder</label>
+    <input type="datetime-local" id="editReminder">
+    <label>Reference Link</label>
+    <input type="url" id="editLink" placeholder="https://">
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal('editModal')">Cancel</button>
+      <button class="btn-save" onclick="saveEdit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Setup Modal -->
+<div class="modal-overlay" id="setupModal">
+  <div class="modal" style="max-width:620px">
+    <div class="modal-title">Connect Google Sheets</div>
+    <p style="font-size:13px;color:var(--text-dim);line-height:1.7;font-family:'DM Sans',sans-serif;">
+      Paste your <strong>Google Apps Script Web App URL</strong> below. Every task you log will sync to your sheet automatically.
+    </p>
+
+    <div class="setup-info">
+      <p><strong>How to set it up (2 minutes):</strong></p>
+      <ol class="setup-steps">
+        <li>Open your Google Sheet → <code>Extensions → Apps Script</code></li>
+        <li>Delete any existing code and paste the script shown below</li>
+        <li>Click <code>Deploy → New Deployment → Web App</code></li>
+        <li>Set "Execute as" → <strong>Me</strong>, "Who has access" → <strong>Anyone</strong></li>
+        <li>Authorize and copy the Web App URL → paste below</li>
+      </ol>
+    </div>
+
+    <label>Apps Script Code to Paste</label>
+    <textarea id="scriptCode" readonly style="font-family:'DM Mono',monospace;font-size:11px;height:180px;background:#f8f5f0;border:1px solid var(--border);border-radius:4px;padding:12px;width:100%;resize:none;color:var(--text-dim);outline:none;"></textarea>
+    <button onclick="copyScript()" style="margin-top:6px;background:none;border:1px solid var(--border2);border-radius:4px;padding:5px 14px;font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--text-dim)'">Copy Script</button>
+
+    <label style="margin-top:18px;">Your Web App URL</label>
+    <input type="url" id="webhookInput" placeholder="https://script.google.com/macros/s/...">
+
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal('setupModal')">Cancel</button>
+      <button class="btn-save" onclick="saveWebhook()">Save & Test</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ─── State ────────────────────────────────────────────────────────────────────
+let tasks = JSON.parse(localStorage.getItem('kml_tasks') || '[]');
+let webhookUrl = localStorage.getItem('kml_webhook') || '';
+let currentFilter = 'all';
+let editingId = null;
+
+// ─── Voice ───────────────────────────────────────────────────────────────────
+let recognition = null;
+let isRecording = false;
+let accumulatedTranscript = '';  // carries text across sessions
+
+const APPS_SCRIPT = `function doGet(e) {
+  try {
+    var p = e.parameter;
+    var sheet = SpreadsheetApp.openById('1Z1_zGbLcDL3ZMJStlKmpNldVNkTiqQBzV3KvgkKiMSI')
+                              .getSheetByName('Sheet1');
+
+    // Add header row if sheet is empty
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(['ID','Title','Description','Priority','Reminder','Link','Status','Created','Synced At']);
+    }
+
+    sheet.appendRow([
+      p.id        || '',
+      p.title     || '',
+      p.desc      || '',
+      p.priority  || '',
+      p.reminder  || '',
+      p.link      || '',
+      p.done === 'true' ? 'Done' : 'Open',
+      p.created   || '',
+      new Date().toISOString()
+    ]);
+
+    return ContentService
+      .createTextOutput(JSON.stringify({status:'ok'}))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({status:'error', msg: err.message}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}`;
+
+document.getElementById('scriptCode').value = APPS_SCRIPT;
+
+function startVoice() {
+  if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+    showToast('Not Available', 'Use Chrome for voice input.', 'warn');
+    return;
+  }
+
+  if (isRecording) return;
+
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR();
+  recognition.continuous = true;       // keep listening until explicitly stopped
+  recognition.interimResults = true;
+  recognition.lang = 'en-IN';
+
+  recognition.onstart = () => {
+    isRecording = true;
+    document.getElementById('voiceBtn').classList.add('recording');
+    document.getElementById('voiceBtnLabel').textContent = 'Listening…';
+    document.getElementById('voiceWave').classList.add('visible');
+    document.getElementById('voiceStopBtn').classList.add('visible');
+  };
+
+  recognition.onresult = (e) => {
+    let interimTranscript = '';
+    let finalTranscript = '';
+
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      const t = e.results[i][0].transcript;
+      if (e.results[i].isFinal) {
+        finalTranscript += t;
+      } else {
+        interimTranscript = t;
+      }
+    }
+
+    if (finalTranscript) accumulatedTranscript += finalTranscript;
+
+    // Show accumulated + current interim in text area
+    document.getElementById('taskInput').value =
+      accumulatedTranscript + (interimTranscript ? ' ' + interimTranscript : '');
+  };
+
+  recognition.onerror = (e) => {
+    if (e.error === 'no-speech') {
+      // don't stop — just keep listening
+      return;
+    }
+    stopVoice();
+    showToast('Voice Error', e.error, 'warn');
+  };
+
+  recognition.onend = () => {
+    if (isRecording) {
+      // auto-restarted by browser timeout — restart silently to keep session alive
+      try { recognition.start(); } catch(e) {}
+    }
+  };
+
+  recognition.start();
+}
+
+function stopVoice() {
+  if (!isRecording) return;
+  isRecording = false;
+  recognition && recognition.stop();
+
+  document.getElementById('voiceBtn').classList.remove('recording');
+  document.getElementById('voiceBtnLabel').textContent = 'Voice Input';
+  document.getElementById('voiceWave').classList.remove('visible');
+  document.getElementById('voiceStopBtn').classList.remove('visible');
+
+  // Keep text in field — don't clear accumulatedTranscript yet
+  // It resets when user manually clears or submits
+}
+
+// Reset accumulated transcript when input is manually cleared
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('taskInput').addEventListener('input', function() {
+    if (this.value === '') accumulatedTranscript = '';
+    // If user edits mid-dictation, sync accumulated to current value
+    else if (!isRecording) accumulatedTranscript = this.value;
+  });
+});
+
+// ─── Tasks ───────────────────────────────────────────────────────────────────
+function save() { localStorage.setItem('kml_tasks', JSON.stringify(tasks)); }
+
+function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+
+async function addTask() {
+  const title = document.getElementById('taskInput').value.trim();
+  if (!title) { document.getElementById('taskInput').focus(); return; }
+
+  const task = {
+    id: genId(),
+    title,
+    desc: document.getElementById('descInput').value.trim(),
+    priority: document.getElementById('priorityInput').value,
+    reminder: document.getElementById('reminderInput').value,
+    link: document.getElementById('linkInput').value.trim(),
+    done: false,
+    created: new Date().toISOString(),
+    syncStatus: 'pending'
+  };
+
+  tasks.unshift(task);
+  save();
+
+  // Clear fields
+  document.getElementById('taskInput').value = '';
+  document.getElementById('descInput').value = '';
+  document.getElementById('linkInput').value = '';
+  document.getElementById('reminderInput').value = '';
+  document.getElementById('priorityInput').value = 'medium';
+  accumulatedTranscript = '';
+
+  renderAll();
+  scheduleReminder(task);
+  await syncToSheet(task);
+}
+
+function toggleDone(id) {
+  const t = tasks.find(t => t.id === id);
+  if (t) { t.done = !t.done; save(); renderAll(); }
+}
+
+function deleteTask(id) {
+  tasks = tasks.filter(t => t.id !== id);
+  save(); renderAll();
+}
+
+function openEdit(id) {
+  editingId = id;
+  const t = tasks.find(t => t.id === id);
+  document.getElementById('editTitle').value = t.title;
+  document.getElementById('editDesc').value = t.desc || '';
+  document.getElementById('editPriority').value = t.priority;
+  document.getElementById('editReminder').value = t.reminder || '';
+  document.getElementById('editLink').value = t.link || '';
+  document.getElementById('editModal').classList.add('open');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  editingId = null;
+}
+
+function saveEdit() {
+  const t = tasks.find(t => t.id === editingId);
+  if (t) {
+    t.title = document.getElementById('editTitle').value.trim();
+    t.desc = document.getElementById('editDesc').value.trim();
+    t.priority = document.getElementById('editPriority').value;
+    t.reminder = document.getElementById('editReminder').value;
+    t.link = document.getElementById('editLink').value.trim();
+    save(); renderAll(); scheduleReminder(t);
+  }
+  closeModal('editModal');
+}
+
+// ─── Filters ─────────────────────────────────────────────────────────────────
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAll();
+}
+
+function getFiltered() {
+  const todayStr = new Date().toDateString();
+  return tasks.filter(t => {
+    if (currentFilter === 'all') return true;
+    if (currentFilter === 'open') return !t.done;
+    if (currentFilter === 'done') return t.done;
+    if (currentFilter === 'high') return t.priority === 'high' && !t.done;
+    if (currentFilter === 'medium') return t.priority === 'medium' && !t.done;
+    if (currentFilter === 'low') return t.priority === 'low' && !t.done;
+    if (currentFilter === 'today') return t.reminder && new Date(t.reminder).toDateString() === todayStr;
+    return true;
+  });
+}
+
+// ─── Render ───────────────────────────────────────────────────────────────────
+function formatReminder(r) {
+  if (!r) return null;
+  const d = new Date(r), now = new Date(), diff = d - now;
+  const overdue = diff < 0, abs = Math.abs(diff);
+  let label;
+  if (abs < 60000) label = 'now';
+  else if (abs < 3600000) label = `${Math.round(abs/60000)}m`;
+  else if (abs < 86400000) label = `${Math.round(abs/3600000)}h`;
+  else label = d.toLocaleDateString('en-IN', {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'});
+  return { label: overdue ? `⚠ ${label} ago` : `⏰ in ${label}`, overdue };
+}
+
+function renderAll() {
+  const filtered = getFiltered();
+  const list = document.getElementById('taskList');
+  const empty = document.getElementById('emptyState');
+
+  document.getElementById('statOpen').textContent = tasks.filter(t => !t.done).length;
+  document.getElementById('statDone').textContent = tasks.filter(t => t.done).length;
+  const todayStr = new Date().toDateString();
+  document.getElementById('statToday').textContent = tasks.filter(t => t.reminder && new Date(t.reminder).toDateString() === todayStr).length;
+
+  // Sheets dot
+  const dot = document.getElementById('sheetsDot');
+  const statusText = document.getElementById('sheetsStatusText');
+  if (!webhookUrl) {
+    dot.className = 'sheets-dot';
+    statusText.textContent = 'Google Sheets — not connected';
+  } else {
+    const pending = tasks.filter(t => t.syncStatus === 'pending').length;
+    if (pending > 0) {
+      dot.className = 'sheets-dot syncing';
+      statusText.textContent = `Syncing… ${pending} pending`;
+    } else {
+      dot.className = 'sheets-dot connected';
+      statusText.textContent = 'Synced to Google Sheets ✓';
+    }
+  }
+
+  if (!filtered.length) {
+    list.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  list.innerHTML = filtered.map(t => {
+    const rem = t.reminder ? formatReminder(t.reminder) : null;
+    const linkDomain = t.link ? (() => { try { return new URL(t.link).hostname.replace('www.',''); } catch(e) { return t.link.slice(0,30); } })() : null;
+    const syncBadge = webhookUrl ? `<span class="sync-badge ${t.syncStatus || 'pending'}">${t.syncStatus === 'synced' ? '✓ synced' : t.syncStatus === 'failed' ? '✕ failed' : '↻ pending'}</span>` : '';
+    return `
+      <div class="task-card priority-${t.priority} ${t.done ? 'done' : ''}">
+        <div class="task-header">
+          <div class="task-check ${t.done ? 'checked' : ''}" onclick="toggleDone('${t.id}')"></div>
+          <div class="task-title">${escHtml(t.title)}</div>
+          <div class="task-actions">
+            <button class="icon-btn" onclick="openEdit('${t.id}')">✎ Edit</button>
+            <button class="icon-btn del" onclick="deleteTask('${t.id}')">✕</button>
+          </div>
+        </div>
+        <div class="task-body">
+          ${t.desc ? `<div class="task-desc">${escHtml(t.desc)}</div>` : ''}
+          <div class="task-footer">
+            <span class="tag priority-${t.priority}">${t.priority}</span>
+            ${rem ? `<span class="task-reminder ${rem.overdue ? 'overdue' : ''}">${rem.label}</span>` : ''}
+            ${t.link ? `<a href="${escHtml(t.link)}" target="_blank" rel="noopener" class="task-link">↗ ${escHtml(linkDomain || t.link)}</a>` : ''}
+            ${syncBadge}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─── Google Sheets Sync ────────────────────────────────────────────────────
+async function syncToSheet(task) {
+  if (!webhookUrl) return;
+
+  try {
+    // GET + URL params — bypasses CORS entirely, works perfectly with Apps Script doGet
+    const params = new URLSearchParams({
+      id:       task.id,
+      title:    task.title,
+      desc:     task.desc     || '',
+      priority: task.priority,
+      reminder: task.reminder || '',
+      link:     task.link     || '',
+      done:     task.done ? 'true' : 'false',
+      created:  task.created
+    });
+
+    const res = await fetch(webhookUrl + '?' + params.toString());
+    const json = await res.json();
+    const t = tasks.find(t => t.id === task.id);
+    if (!t) return;
+
+    if (json.status === 'ok') {
+      t.syncStatus = 'synced';
+      showToast('✓ Synced to Sheet', '"' + task.title.slice(0,40) + '" added.', 'ok');
+    } else {
+      t.syncStatus = 'failed';
+      showToast('Sync Error', json.msg || 'Unknown error.', 'warn');
+    }
+    save(); renderAll();
+
+  } catch (err) {
+    const t = tasks.find(t => t.id === task.id);
+    if (t) { t.syncStatus = 'failed'; save(); renderAll(); }
+    showToast('Sync Failed', err.message, 'warn');
+  }
+}
+
+// ─── Setup ────────────────────────────────────────────────────────────────────
+function openSetup() {
+  document.getElementById('webhookInput').value = webhookUrl;
+  document.getElementById('setupModal').classList.add('open');
+}
+
+async function saveWebhook() {
+  const url = document.getElementById('webhookInput').value.trim();
+  if (!url || !url.startsWith('https://script.google.com')) {
+    showToast('Invalid URL', 'Must be a Google Apps Script URL.', 'warn');
+    return;
+  }
+
+  webhookUrl = url;
+  localStorage.setItem('kml_webhook', webhookUrl);
+  closeModal('setupModal');
+  showToast('Connected!', 'Testing sync with a test row…', 'ok');
+
+  // Retry pending tasks
+  const pending = tasks.filter(t => t.syncStatus !== 'synced');
+  for (const t of pending) await syncToSheet(t);
+  renderAll();
+}
+
+function copyScript() {
+  navigator.clipboard.writeText(APPS_SCRIPT).then(() => {
+    showToast('Copied!', 'Paste it in Apps Script editor.', 'ok');
+  });
+}
+
+// ─── Reminders ────────────────────────────────────────────────────────────────
+const reminderTimers = {};
+
+function scheduleReminder(task) {
+  if (!task.reminder || task.done) return;
+  const delay = new Date(task.reminder) - Date.now();
+  if (delay < 0 || delay > 86400000 * 7) return;
+  if (reminderTimers[task.id]) clearTimeout(reminderTimers[task.id]);
+  reminderTimers[task.id] = setTimeout(() => {
+    showToast('⏰ Reminder', task.title, 'warn');
+    if (Notification.permission === 'granted') {
+      new Notification("Karthik's Mind Log", { body: task.title });
+    }
+  }, delay);
+}
+
+function showToast(title, body, type = '') {
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<div class="toast-title">${title}</div><div class="toast-body">${body}</div>`;
+  c.appendChild(t);
+  setTimeout(() => t.remove(), 4500);
+}
+
+// ─── Init ────────────────────────────────────────────────────────────────────
+if ('Notification' in window && Notification.permission === 'default') {
+  Notification.requestPermission();
+}
+
+// Close modals on outside click
+['editModal','setupModal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', function(e) {
+    if (e.target === this) closeModal(id);
+  });
+});
+
+// Ctrl/Cmd+Enter to log
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') addTask();
+});
+
+tasks.forEach(scheduleReminder);
+renderAll();
+</script>
+</body>
+</html>
